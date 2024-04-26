@@ -2,7 +2,7 @@ import { UserDto } from '@/models';
 
 const token = ''
 
-const API_URL = import.meta.env.VITE_REACT_API_URL
+const API_URL = 'https://tupedido-backend.netlify.app/api'
 
 export class UserService {
   static async getUserByName ( name: string ) {

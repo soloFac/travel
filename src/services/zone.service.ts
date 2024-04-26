@@ -2,7 +2,7 @@ import { ZoneDto } from '@/models';
 
 const token = ''
 
-const API_URL = import.meta.env.VITE_REACT_API_URL
+const API_URL = 'https://tupedido-backend.netlify.app/api'
 
 export class ZoneService {
   static async getZoneByName ( name: string ) {

@@ -1,6 +1,6 @@
 import { LocalEntity, LocalInfoEntity } from '@/models';
 
-const API_URL = import.meta.env.VITE_REACT_API_URL
+const API_URL = 'https://tupedido-backend.netlify.app/api'
 
 export class LocalService {
   static async GetLocalByName ( localName: string | undefined ): Promise<LocalInfoEntity | null> {

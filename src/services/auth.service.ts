@@ -1,6 +1,6 @@
 import { UserAuthDto } from '../models/dtos/user.auth.dto';
 
-const API_URL = import.meta.env.VITE_REACT_API_URL
+const API_URL = 'https://tupedido-backend.netlify.app/api'
 
 export class AuthService {
   // constructor () {}

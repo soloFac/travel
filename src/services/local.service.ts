@@ -1,6 +1,6 @@
 import { LocalEntity, LocalInfoEntity } from '@/models';
 
-const API_URL = 'https://tupedido-backend.netlify.app/api'
+const API_URL = 'localhost:8000/api'
 
 export class LocalService {
   static async GetLocalByName ( localName: string | undefined ): Promise<LocalInfoEntity | null> {
@@ -11,6 +11,7 @@ export class LocalService {
       const response = await fetch( `${ API_URL }/local?localName=${ localName }`, {
         method: 'GET',
         headers: {
+          mode: 'no-cors',
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }

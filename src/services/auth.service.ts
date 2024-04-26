@@ -9,6 +9,7 @@ export class AuthService {
     const response = await fetch( `${ API_URL }/auth/login`, {
       method: 'POST',
       headers: {
+        accept: 'application/json',
         'Content-Type': 'application/json',
         'owner': 'MI-TOK3N_'
       },

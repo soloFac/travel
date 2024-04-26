@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'LexendRegular';
+  src: url('../assets/fonts/Lexend/Lexend-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'LexendBold';
+  src: url('../assets/fonts/Lexend/Lexend-SemiBold.ttf');
+}
+
+:root {
+  --primary-color: rgb(255, 83, 83);
+
+}
+
+/* 
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.input {
+  font: inherit;
+  color: currentColor;
+  width: 1.3em;
+  height: 1.3em;
+  border: 3px solid red;
+  border-radius: 50%;
+} */
+
+.container {
+  width: 100%;
+  display: flex !important;
+  flex-direction: row !important;
+  margin-left: 2em;
+}
+
+.radio {
+  margin-top: 10px;
+  height: 1.2em !important;
+  text-transform: capitalize;
+}
+
+.radio input {
+  background-color: rgb(182, 182, 182) !important;
+}
+
+.radio input:checked {
+  background-color: rgb(255, 83, 83) !important;
+}
+
+.text {
+  font-size: 16px !important;
+  color: rgb(109, 109, 109) !important;
+  font-family: 'LexendBold' !important;
+}
+
+.price {
+  color: rgb(238, 59, 59);
+  font-family: 'LexendRegular';
+}
+
+
+@media screen and (max-width: 650px) {
+  .text {
+    font-size: 17px !important;
+  }
+}

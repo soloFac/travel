@@ -1,0 +1,60 @@
+
+
+.last_step_container {  
+  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin-top: 15px !important;
+  margin-left: 25px !important;
+}
+
+.form_container {
+  width: 95% !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: 'LexendRegular' !important;
+  color: white !important;
+  font-size: 2em !important;
+  margin-bottom: 20px !important;
+  z-index: 9999;
+  text-shadow: 
+    1px 1px 10px #8C8C8C,
+    1px 1px 10px #8C8C8C !important;
+}
+
+.input {
+  width: 100% !important;
+  color: var(--text-color) !important;
+  margin-bottom: 10px !important;
+  /* background-color: red !important; */
+}
+
+.input input {
+  width: 100% !important;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px !important;
+  -webkit-border-radius: 10px !important;
+  -moz-border-radius: 10px !important;
+  -ms-border-radius: 10px !important;
+  -o-border-radius: 10px !important;
+}
+
+.nombre, .apellido {
+  width: 47% !important;
+}
+
+.direccion {
+  width: 65% !important;
+}
+
+.nro {
+  width: 30% !important;
+}

@@ -1,0 +1,113 @@
+:root {
+  --border-color: #8C8C8C;
+  --text-color: #818181;
+  --primary-color: #f8665c;
+}
+
+.receipe_container {
+  width: 90% !important;
+  margin-top: 30px !important;
+  /* background-color: aliceblue !important; */
+  position: relative;
+  z-index: 99999 !important;
+}
+
+.receipe_container div div[data-orientation="horizontal"] {
+  width: 90% !important;
+  /* padding-left: 20px !important; */
+  margin-left: 30px !important;
+  text-align: center !important;
+  /* background-color: aliceblue !important; */
+}
+
+.mantine-Stepper-content {
+  margin-left: 5px !important;
+  margin-right: -20px !important;
+  background-color: blue;
+}
+
+.receipe_container div div div[data-orientation="horizontal"]
+{
+  display: flex !important;
+  width: 5px !important;
+  background-color: red !important;
+}
+
+
+.receipe_container div div button span:first-child {
+  font-size: 14px !important;
+}
+
+.receipe_container div div button span:nth-child(2) {
+  font-size: 12px !important;
+}
+
+.receipe_container:nth-child(2) {
+  margin-top: 0 !important;
+}
+
+.btn_step_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  margin-bottom: 20px !important;
+  /* background-color: rgb(3, 137, 255) !important; */
+}
+
+.btn {
+  font-family: 'LexendRegular' !important;
+  color: rgb(78, 78, 78) !important;
+  margin-right: 20px !important;
+  margin-left: 30px !important;
+}
+
+.submit_btn {
+  outline: 1px solid #f8665c !important;
+  color: #f8665c !important;
+  text-shadow: none !important;
+  font-family: 'LexendRegular' !important;
+  margin-left: 40px !important;
+}
+
+.btn, .submit_btn {
+  margin-top: -10px !important;
+}
+
+.submit_btn:hover {
+  transition-delay: 0s !important;
+  transition-duration: 200ms !important;
+  transition-timing-function: step-start !important;
+  background-color: transparent !important;
+  outline: 2px solid #f8665c !important;
+  color: #ff3527 !important;
+}
+
+
+/* SECOND STEP */
+
+
+
+/* THIRD STEP */
+
+.step_completed_container {
+  width: 100% !important;
+  height: min-content;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 1em 2em !important;
+  margin-left: 25px !important;
+  font-family: 'FibraOneBold' !important;
+}
+
+.step_completed_container p {
+  margin-top: 0 !important;
+  margin-bottom: 15px !important;
+}
+
+.step_whatsapp_icon {
+  margin-bottom: 15px !important;
+}

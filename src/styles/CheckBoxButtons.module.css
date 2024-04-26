@@ -1,0 +1,7 @@
+.container {
+  width: max-content !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin-left: 2.2em !important;
+  text-transform: capitalize !important;
+}

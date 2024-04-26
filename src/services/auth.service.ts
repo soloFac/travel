@@ -1,6 +1,6 @@
 import { UserAuthDto } from '../models/dtos/user.auth.dto';
 
-const API_URL = 'https://tuspedidos-backend.netlify.app/api'
+const API_URL = 'https://kf1lnjzw-8000.brs.devtunnels.ms/api'
 
 export class AuthService {
   // constructor () {}

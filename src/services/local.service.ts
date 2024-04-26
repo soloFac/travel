@@ -1,6 +1,6 @@
 import { LocalEntity, LocalInfoEntity } from '@/models';
 
-const API_URL = 'localhost:8000/api'
+const API_URL = 'https://tuspedidos-backend.netlify.app/api'
 
 export class LocalService {
   static async GetLocalByName ( localName: string | undefined ): Promise<LocalInfoEntity | null> {

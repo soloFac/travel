@@ -23,6 +23,7 @@ export const LocalPage = () => {
   // const [openedPersonalForm, { open: openPersonalForm, close: closePersonalForm }] = useDisclosure( false );
 
   useEffect( () => {
+    console.log( 'useEffect', localName )
     if ( localName ) { getLocal( localName ) }
     console.log( 'local', local )
   }

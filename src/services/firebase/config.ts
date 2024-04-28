@@ -25,5 +25,3 @@ export const FirebaseDB = getFirestore( FirebaseApp )
 
 const FirebaseStorage = getStorage( FirebaseApp )
 export const FirebaseStorageRef = ref( FirebaseStorage )
-
-getDownloadURL( ref( FirebaseStorage, 'images/stars.jpg' ) )

@@ -12,19 +12,6 @@ import { ZoneDto } from './zone.dto'
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class LocalDto {
   constructor (
-    public id: string | null,
-    public user: UserEntity, //*
-    public name: string, //*
-    public address: string, //*
-    public whatsapp: string, //*
-    public instagram: string | null,
-    public icon: string | null,
-    public transfer: TransferDto | null,
-    public schedules: ScheduleEntity[] | null,
-    public zones: ZoneEntity[] | null,
-    public menus: MenuEntity[] | null,
-    public categories: FoodCategoryEntity[] | null,
-    public active: boolean = true
   ) { }
 
   static createForAuth = ( local: LocalEntity ): [ string?, LocalEntity? ] => {

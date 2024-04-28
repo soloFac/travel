@@ -1,6 +1,7 @@
 export * from './extra.dto'
 export * from './foodcategory.dto'
 export * from './local.dto'
+export * from './local.info.dto'
 export * from './schedule.dto'
 export * from './user.dto'
 export * from './zone.dto'

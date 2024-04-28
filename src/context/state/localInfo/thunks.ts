@@ -1,20 +1,31 @@
-import { CustomError } from '@/models'
+import { getDatabase, ref, onValue } from 'firebase/database';
+
 import { fetchLocalError, fetchLocalInfo, fetchLocalInfoSuccess } from './localInfoSlice'
-import { LocalService } from '@/services/api'
+import { FirebaseDB } from '@/services';
+import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore/lite';
+import { LocalDto, LocalInfoDto, LocalInfoEntity } from '@/models';
 
 // const API_URL = 'https://api.example.com/orders'
 
 export const startFetchLocal = ( localName: string ) => {
   return async ( dispatch: any ) => {
     dispatch( fetchLocalInfo() )
+    console.log( 'localName: ', localName )
     
-    const local = await LocalService.GetLocalByName( localName )
-    if ( local === null ) throw CustomError.notFound( 'Local not found' )
-
+    
     try {
-      dispatch( fetchLocalInfoSuccess( { local } ) )
+      const docRef = doc( FirebaseDB, 'locals', localName );
+      const docSnap = await getDoc( docRef )
+
+      if ( docSnap.exists() ) {
+        const [error, local] = LocalInfoDto.create( docSnap.data() as LocalInfoEntity )
+        if ( !local ) return dispatch( fetchLocalError( error ) )
+        dispatch( fetchLocalInfoSuccess( { local } ) )
+      } else {
+        console.log( 'Documento no encontrado' )
+      }
     } catch ( error ) {
-      dispatch( fetchLocalError( error ) )
+      console.error( 'Error al obtener datos:', error );
     }
   }
 }

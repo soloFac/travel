@@ -9,7 +9,7 @@ export class LocalInfoEntity {
   public name: string //*
   public address: string
   public whatsapp: string //*
-  public instagram: string
+  public instagram: string | null = null
   public icon: string | null = null
   public transfer: TransferEntity
   public schedules: ScheduleEntity[]
@@ -19,9 +19,7 @@ export class LocalInfoEntity {
   public active: boolean = true
 
   constructor (
-    id: string, name: string, address: string, whatsapp: string,
-    instagram: string, icon: string | null, transfer: TransferEntity, schedules: ScheduleEntity[],
-    zones: ZoneEntity[], menus: MenuEntity[], categories: FoodCategoryEntity[]
+    id: string, name: string, address: string, whatsapp: string, instagram: string | null, icon: string | null, transfer: TransferEntity, schedules: ScheduleEntity[], zones: ZoneEntity[], menus: MenuEntity[], categories: FoodCategoryEntity[], active: boolean
   ) {
     if ( icon ) {
       this.icon = icon
@@ -38,5 +36,6 @@ export class LocalInfoEntity {
     this.zones = zones
     this.menus = menus
     this.categories = categories
+    this.active = active
   }
 }

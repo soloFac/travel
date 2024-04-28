@@ -1,6 +1,6 @@
 import { LocalEntity, LocalInfoEntity } from '@/models';
 
-const API_URL = 'https://kf1lnjzw-8000.brs.devtunnels.ms/api'
+const API_URL = import.meta.env.VITE_REACT_API_URL
 
 export class LocalService {
   static async GetLocalByName ( localName: string | undefined ): Promise<LocalInfoEntity | null> {
@@ -11,7 +11,6 @@ export class LocalService {
       const response = await fetch( `${ API_URL }/local?localName=${ localName }`, {
         method: 'GET',
         headers: {
-          mode: 'no-cors',
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }

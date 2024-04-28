@@ -1,6 +1,6 @@
-import { UserAuthDto } from '../models/dtos/user.auth.dto';
+import { UserAuthDto } from '../../models/dtos/user.auth.dto';
 
-const API_URL = 'https://kf1lnjzw-8000.brs.devtunnels.ms/api'
+const API_URL = import.meta.env.VITE_REACT_API_URL
 
 export class AuthService {
   // constructor () {}
@@ -9,7 +9,6 @@ export class AuthService {
     const response = await fetch( `${ API_URL }/auth/login`, {
       method: 'POST',
       headers: {
-        accept: 'application/json',
         'Content-Type': 'application/json',
         'owner': 'MI-TOK3N_'
       },

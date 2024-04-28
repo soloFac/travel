@@ -1,12 +1,12 @@
-import { ZoneDto } from '@/models';
+import { UserDto } from '@/models';
 
 const token = ''
 
-const API_URL = 'https://tupedido-backend.netlify.app/api'
+const API_URL = import.meta.env.VITE_REACT_API_URL
 
-export class ZoneService {
-  static async getZoneByName ( name: string ) {
-    const response = await fetch( `${ API_URL }/zone?name=${ name }`, {
+export class UserService {
+  static async getUserByName ( name: string ) {
+    const response = await fetch( `${ API_URL }/user?name=${ name }`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -17,40 +17,38 @@ export class ZoneService {
     return data;
   }
 
-  static async createZone ( zone: ZoneDto ) {
-    const response = await fetch( `${ API_URL }/zone/save`, {
-      method: 'POST',
+  static async getUserByEmail ( email: string ) {
+    const response = await fetch( `${ API_URL }/user?email=${ email }`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'x-token': token
-      },
-      body: JSON.stringify( zone )
+      }
     } );
     const data = await response.json();
     return data;
   }
 
-  static async updateZone ( zone: ZoneDto ) {
-    const response = await fetch( `${ API_URL }/zone/modify`, {
+  static async modifyUser ( localId: string, user: UserDto ) {
+    const response = await fetch( `${ API_URL }/user/modify?localId=${ localId }`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'x-token': token
       },
-      body: JSON.stringify( zone )
+      body: JSON.stringify( user )
     } );
     const data = await response.json();
     return data;
   }
 
-  static async deleteZone ( id: string ) {
-    const response = await fetch( `${ API_URL }/zone/delete`, {
+  static async deleteUser ( localId: string ) {
+    const response = await fetch( `${ API_URL }/user/delete?localId=${ localId }`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'x-token': token
-      },
-      body: JSON.stringify( { id } )
+      }
     } );
     const data = await response.json();
     return data;

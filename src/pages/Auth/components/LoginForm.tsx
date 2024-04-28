@@ -13,7 +13,7 @@ import {
 import classes from '../styles/AuthenticationTitle.module.css';
 import { useForm } from '@mantine/form';
 import { UserAuthDto } from '@/models';
-import { AuthService } from '@/services';
+import { AuthService } from '@/services/api';
 
 export const LoginForm = () =>  {
   const form = useForm( {

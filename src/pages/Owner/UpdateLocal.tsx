@@ -1,8 +1,10 @@
-import { LocalService } from '@/services'
 import { Button, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { useLocalActions } from '../Local/hooks'
 
 export const UpdateLocal = () => {
+  const { updateLocal } = useLocalActions()
+
   const form = useForm( {
     initialValues: { local: '', token: '' },
     validate: {
@@ -15,8 +17,15 @@ export const UpdateLocal = () => {
 
     const { local, token } = form.getValues()
 
-    const data = await LocalService.UpdateLocal( JSON.parse( local ), token )
-    console.log( '-----------DATA-----------:', data )
+    if ( token !== 'MI-TOK3N_' ) {
+      alert( 'Invalid token' )
+      return
+    }
+    
+    updateLocal( JSON.parse( local ) )
+
+    // const data = await LocalService.UpdateLocal( JSON.parse( local ), token )
+    // console.log( '-----------DATA-----------:', data )
   }
 
   return (

@@ -1,9 +1,9 @@
-import { MenuDto } from '../models/dtos/menu.dto';
+import { MenuDto } from '../../models/dtos/menu.dto';
 
 // const idLocal = 234
 // const idMenu = 2
 
-const API_URL = 'https://tupedido-backend.netlify.app/api'
+const API_URL = import.meta.env.VITE_REACT_API_URL
 
 const token = 'eyJ'
 

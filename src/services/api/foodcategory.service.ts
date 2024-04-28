@@ -1,6 +1,6 @@
-import { FoodCategoryDto } from '../models/dtos';
+import { FoodCategoryDto } from '../../models/dtos';
 
-const API_URL = 'https://tupedido-backend.netlify.app/api'
+const API_URL = import.meta.env.VITE_REACT_API_URL
 
 export class CategoryService {
   static async getCategoryByName ( localId: string, nameCategory: string ) {

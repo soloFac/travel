@@ -1,6 +1,6 @@
 import { CustomError } from '@/models'
 import { fetchLocalError, fetchLocalInfo, fetchLocalInfoSuccess } from './localInfoSlice'
-import { LocalService } from '@/services'
+import { LocalService } from '@/services/api'
 
 // const API_URL = 'https://api.example.com/orders'
 

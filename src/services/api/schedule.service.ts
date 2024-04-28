@@ -2,7 +2,7 @@ import { ScheduleDto, DaysEnum } from '@/models';
 
 const token = ''
 
-const API_URL = 'https://tupedido-backend.netlify.app/api'
+const API_URL = import.meta.env.VITE_REACT_API_URL
 
 export class ScheduleService {
   static async getScheduleByDay ( idLocal: string, day: DaysEnum ) {

@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Card, Image, Text, Badge, Button, Title, ActionIcon, Tooltip } from '@mantine/core';
-
-import classes from '../styles/MenuCard.module.css';
-import { Extra, MenuEntity } from '@/models';
 import { useDisclosure } from '@mantine/hooks';
+
+import { Extra, MenuEntity } from '@/models';
 import { ModalMantine } from '@/components';
 import { OrderForm } from './OrderForm';
 import { AddIcon } from './AddIcon';
+
+import classes from '../styles/MenuCard.module.css';
 
 interface MenuCardProps {
   menu: MenuEntity

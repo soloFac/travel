@@ -2,8 +2,8 @@ import { Button, Box, Title, Container } from '@mantine/core';
 // import { notifications } from '@mantine/notifications';
 
 import { CheckBoxButtons, ImageMenu, RadioButtons, SectionComponent, Remember } from '@/components';
-import { Extra, LocalEntity, MenuEntity, OrderEntity } from '@/models';
-import { useAppSelector, useCounter } from '@/hooks';
+import { Extra, MenuEntity, OrderEntity } from '@/models';
+import { useCounter } from '@/hooks';
 import { AmountCounter } from './AmountCounter';
 import { useOrderActions } from '../hooks';
 
@@ -13,7 +13,6 @@ import { CheckBoxExtraButtons } from './CheckBoxExtraButtons';
 import { GetValidatedOrder } from '@/utils';
 import { showNotification } from '@mantine/notifications';
 
-const imgPath = `${ import.meta.env.VITE_REACT_IMG_URL }/menus`        
 
 interface OrderFormProps {
   menu: MenuEntity
@@ -23,7 +22,6 @@ interface OrderFormProps {
 
 export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras } ) => {
   const { name: menuName, image, variants } = menu
-  const local: LocalEntity = useAppSelector( ( state: any ) => state.localInfo ).local
 
   const { addMenu } = useOrderActions()
 

@@ -1,7 +1,3 @@
-import { Image } from '@mantine/core'
-
-import classes from './styles/prueba.module.css'
-
 export const Prueba = () => {
   return (
     <div>

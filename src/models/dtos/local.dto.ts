@@ -1,6 +1,6 @@
 import { getValidatedDtos } from '@/types'
 import { validString } from '../../helper/validString'
-import { LocalEntity, type FoodCategoryEntity, type MenuEntity, type ScheduleEntity, type UserEntity, type ZoneEntity } from '../entities'
+import { LocalEntity, TransferEntity, type FoodCategoryEntity, type MenuEntity, type ScheduleEntity, type UserEntity, type ZoneEntity } from '../entities'
 import { CustomError } from '../errors'
 import { FoodCategoryDto } from './foodcategory.dto'
 import { MenuDto } from './menu.dto'
@@ -12,6 +12,19 @@ import { ZoneDto } from './zone.dto'
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class LocalDto {
   constructor (
+    public id: string | null = null,
+    public user: UserEntity, //*
+    public name: string, //*
+    public address: string, //*
+    public whatsapp: string, //*
+    public instagram: string | null = null,
+    public icon: string | null = null,
+    public transfer: TransferEntity | null = null,
+    public schedules: ScheduleEntity[] | null = null,
+    public zones: ZoneEntity[] | null = null,
+    public menus: MenuEntity[] | null = null,
+    public categories: FoodCategoryEntity[] | null = null,
+    public active: boolean = true
   ) { }
 
   static createForAuth = ( local: LocalEntity ): [ string?, LocalEntity? ] => {

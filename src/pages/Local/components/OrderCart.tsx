@@ -9,7 +9,6 @@ import { useOrderActions } from '../hooks';
 import React from 'react';
 import { LocalEntity } from '../../../models/entities/local.entity';
 
-const imgPath = `${ import.meta.env.VITE_REACT_IMG_URL }/menus`
 
 interface OrderCartProps {
   handleSendOrder: () => void

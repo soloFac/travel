@@ -5,8 +5,6 @@ import classes from '../styles/LocalCard.module.css'
 import { Instagram, Location, ModalMantine, Whatsapp } from '@/components'
 import { useDisclosure } from '@mantine/hooks'
 
-const imgPath = `${ import.meta.env.VITE_REACT_IMG_URL }/local`
-
 export const LocalCard: React.FC<LocalInfoEntity> = ( local: LocalInfoEntity  ) => {
   const { name, instagram, whatsapp, schedules, address, icon } = local
   const [opened, { open, close }] = useDisclosure( false );

@@ -2,14 +2,11 @@ import { useState } from 'react';
 import { Card, Image, Text, Badge, Button, Title, ActionIcon, Tooltip } from '@mantine/core';
 
 import classes from '../styles/MenuCard.module.css';
-import { Extra, LocalEntity, MenuEntity } from '@/models';
+import { Extra, MenuEntity } from '@/models';
 import { useDisclosure } from '@mantine/hooks';
 import { ModalMantine } from '@/components';
 import { OrderForm } from './OrderForm';
 import { AddIcon } from './AddIcon';
-import { useAppSelector } from '@/hooks';
-
-const imgPath = `${ import.meta.env.VITE_REACT_IMG_URL }/menus`
 
 interface MenuCardProps {
   menu: MenuEntity
@@ -19,8 +16,6 @@ interface MenuCardProps {
 
 export const MenuCard: React.FC<MenuCardProps> = ( { menu, dressings, extras } ) => {
   const { name, image, variants, description, price } = menu;
-
-  const local: LocalEntity = useAppSelector( ( state: any ) => state.localInfo ).local
 
   const [opened, { open, close }] = useDisclosure( false );
 

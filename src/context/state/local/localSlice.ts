@@ -1,4 +1,3 @@
-import { getPersistedStateLocalStorage } from '@/hooks'
 import { LocalDto } from '@/models'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 

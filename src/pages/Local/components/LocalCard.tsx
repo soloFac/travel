@@ -15,7 +15,7 @@ export const LocalCard: React.FC<LocalInfoEntity> = ( local: LocalInfoEntity  ) 
   return (
     <div className={classes.container}>
       <div className={classes.image_container}>
-        <Image className={classes.image} src={`${ imgPath }/${ icon }`} alt='Logo' width={150} height={150}/>
+        <Image className={classes.image} src={icon} alt='Logo' width={150} height={150}/>
       </div>
       <div className={classes.header}>
         <Whatsapp whatsapp={whatsapp} size={30}/>

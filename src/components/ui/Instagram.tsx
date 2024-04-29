@@ -2,10 +2,10 @@ import React from 'react';
 
 interface InstagramProps {
   size?: number;
-  instagram: string;
+  instagram?: string | null;
 }
 
-export const Instagram: React.FC<InstagramProps> = ( { size = 20, instagram } ) => {
+export const Instagram: React.FC<InstagramProps> = ( { size = 20, instagram = '' } ) => {
   return (
     <a href={`https://www.instagram.com/${ instagram }`}>
       <svg width={size} height={size} viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>

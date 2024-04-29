@@ -23,5 +23,4 @@ export const FirebaseApp = initializeApp( firebaseConfig )
 export const FirebaseAnalytics = getAnalytics( FirebaseApp )
 export const FirebaseDB = getFirestore( FirebaseApp )
 
-const FirebaseStorage = getStorage( FirebaseApp )
-export const FirebaseStorageRef = ref( FirebaseStorage )
+export const FirebaseStorage = getStorage( FirebaseApp )

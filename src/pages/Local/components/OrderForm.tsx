@@ -25,8 +25,6 @@ export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras }
   const { name: menuName, image, variants } = menu
   const local: LocalEntity = useAppSelector( ( state: any ) => state.localInfo ).local
 
-  const path = `${ imgPath }/${ local.name.replace( / /g, '' ) }/${ image }`
-
   const { addMenu } = useOrderActions()
 
   const [variant, setVariant] = useState( '' )
@@ -92,7 +90,7 @@ export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras }
       <form onSubmit={handleSubmit}>
         <div className={classes.header_container}>
           <Title order={1} className={ classes.main_title }>{ menuName }</Title>
-          <ImageMenu path={path} alt={menu.name} />
+          <ImageMenu path={image} alt={menu.name} />
         </div>
 
         <SectionComponent title={'Variantes'}>

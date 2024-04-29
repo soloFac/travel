@@ -40,7 +40,7 @@ export const OrderCart: React.FC<OrderCartProps> = ( { handleSendOrder } ) => {
               <div key={name}>
                 <div className={classes.divider}/>
                 <div key={index} className={classes.order_container}>
-                  <ImageMenu path={`${ imgPath }/${ local.name.replace( / /g, '' ) }/${ image }`} alt={name} extraClasses={classes.image} />
+                  <ImageMenu path={`${ image }`} alt={name} extraClasses={classes.image} />
 
                   <div className={classes.info_container}>
                     <Title className={classes.secondary_title}>{menuOrder}</Title>

@@ -83,7 +83,7 @@ export const MenuCard: React.FC<MenuCardProps> = ( { menu, dressings, extras } )
       </Group> */}
 
       <section className={`${ classes.img } ${ resizeImg }`}>
-        <Image src={`${ imgPath }/${ local.name.replace( / /g, '' ) }/${ image }`} alt={name}/>
+        <Image src={`${ image }`} alt={name}/>
       </section>
     </Card>
   );

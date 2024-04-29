@@ -6,6 +6,7 @@ import { CategoriesPage, HomePage, LocalPage,
 import { LoginStatus } from '@/types'
 import { UpdateLocal } from '@/pages/Owner/UpdateLocal'
 import { AddLocal } from '@/pages/Owner/AddLocal'
+import { Prueba } from '@/pages/Owner'
 
 export const AppRouter = () => {
 
@@ -21,6 +22,7 @@ export const AppRouter = () => {
         <Route path='/auth/*' element={ <AuthRoutes /> } />
         <Route path='/updateLocal' element={ <UpdateLocal /> } />
         <Route path='/addLocal' element={ <AddLocal /> } />
+        <Route path='/test' element={ <Prueba /> } />
 
         {
           ( status === LoginStatus.SUCCESS )

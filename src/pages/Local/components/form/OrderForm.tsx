@@ -1,26 +1,28 @@
+import { useState, useEffect } from 'react';
 import { Button, Box, Title, Container } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 // import { notifications } from '@mantine/notifications';
 
-import { CheckBoxButtons, ImageMenu, RadioButtons, SectionComponent, Remember } from '@/components';
+import { CheckBoxButtons, ImageMenu, SectionComponent, Remember } from '@/components';
 import { Extra, MenuEntity, OrderEntity } from '@/models';
 import { useCounter } from '@/hooks';
-import { AmountCounter } from './AmountCounter';
-import { useOrderActions } from '../hooks';
+import { AmountCounter } from '../AmountCounter';
 
-import classes from '../styles/OrderForm.module.css'
-import { useState, useEffect } from 'react';
-import { CheckBoxExtraButtons } from './CheckBoxExtraButtons';
+import { CheckBoxExtraButtons } from '../CheckBoxExtraButtons';
 import { GetValidatedOrder } from '@/utils';
-import { showNotification } from '@mantine/notifications';
+import { useOrderActions } from '../../hooks';
 
+import classes from '../../styles/OrderForm.module.css'
+import { VariantsRadioButtons } from '../VariantsRadioButtons';
 
 interface OrderFormProps {
   menu: MenuEntity
   dressings?: string[] | null
   extras?: Extra[] | null
+  closeModal: () => void
 }
 
-export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras } ) => {
+export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras, closeModal } ) => {
   const { name: menuName, image, variants } = menu
 
   const { addMenu } = useOrderActions()
@@ -75,6 +77,8 @@ export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras }
       title: 'Pedido agregado correctamente',
       message: 'Puedes ver arriba a la derecha el carrito de pedido 🤥',
     } )
+    // close modal
+    closeModal()
   }
 
  
@@ -92,7 +96,7 @@ export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras }
         </div>
 
         <SectionComponent title={'Variantes'}>
-          <RadioButtons
+          <VariantsRadioButtons
             variants={variants}
             selectedRadio={variant}
             setSelectedRadio={setVariant}

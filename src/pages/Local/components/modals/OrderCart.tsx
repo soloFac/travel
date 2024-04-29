@@ -1,13 +1,12 @@
 import { ActionIcon, Button, Title } from '@mantine/core';
-import classes from '../styles/OrderCart.module.css';
+import classes from '../../styles/OrderCart.module.css';
 import { useAppSelector } from '@/hooks';
 import { ImageMenu, DeleteIcon } from '@/components';
-import { OptionsMenuCard } from './OptionsMenuCard';
-import { MenuEntity, OrderEntity } from '@/models';
+import { OptionsMenuCard } from '../OptionsMenuCard';
+import { LocalEntity, MenuEntity, OrderEntity } from '@/models';
 import { CalculateTotalOrders } from '@/utils';
-import { useOrderActions } from '../hooks';
+import { useOrderActions } from '../../hooks';
 import React from 'react';
-import { LocalEntity } from '../../../models/entities/local.entity';
 
 
 interface OrderCartProps {

@@ -4,7 +4,7 @@ import { useDisclosure } from '@mantine/hooks';
 
 import { Extra, MenuEntity } from '@/models';
 import { ModalMantine } from '@/components';
-import { OrderForm } from './OrderForm';
+import { OrderForm } from './form/OrderForm';
 import { AddIcon } from './AddIcon';
 
 import classes from '../styles/MenuCard.module.css';
@@ -34,6 +34,7 @@ export const MenuCard: React.FC<MenuCardProps> = ( { menu, dressings, extras } )
           menu={menu}
           dressings={dressings}
           extras={extras}
+          closeModal={close}
         />
       </ModalMantine>
 

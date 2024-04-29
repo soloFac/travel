@@ -5,27 +5,29 @@ import { OrderCart } from '@/pages/Local/components';
 
 import classes from '../styles/Recipe.module.css';
 import { WhatsappIcon } from './ui';
-import { OrderInfoForm } from '@/pages/Local/components/OrderInfoForm';
+import { OrderInfoForm } from '@/pages/Local/components/form/OrderInfoForm';
 
 export interface FormValues {
-  nombre: string
-  apellido: string
-  direccion: string
-  nro: string
-  telefono: string
+  name: string
+  phone: string
+  address: string
+  addressNumber: string
+  coments: string
 }
 
 export const Recipe = () => {
   const [active, setActive] = useState( 0 );
 
+
+
   const form = useForm( {
     mode: 'controlled',
     initialValues: {
-      nombre: '',
-      apellido: '',
-      direccion: '',
-      nro: '',
-      telefono: '',
+      name: '',
+      phone: '',
+      address: '',
+      addressNumber: '',
+      comments: '',
     },
 
     validate: ( values ) => {
@@ -37,12 +39,12 @@ export const Recipe = () => {
       if ( active === 1 ) {
         console.log( 'active', active, 'values', values )
         return {
-          nombre: values.nombre.trim().length < 3 ? 'Nombre debería tener al menos 3 caracteres' : null,
-          apellido: values.nombre.trim().length < 3 ? 'Apellido debería tener al menos 3 caracteres' : null,
-          direccion: values.direccion.trim().length < 5 ? 'Dirección debería tener al menos 5 caracteres' : null,
+          name: values.name.trim().length < 3 ? 'Nombre debería tener al menos 3 caracteres' : null,
+          phone: /^\d{10}$/.test( values.phone ) ? null : 'Número de telefono invalido',
+          address: values.address.trim().length < 5 ? 'Dirección debería tener al menos 5 caracteres' : null,
           // addressNumber debería ser menor a 5 caracteres y solo números
-          nro: /^\d{1,5}$/.test( values.nro ) ? null : 'Número de dirección invalido',
-          telefono: /^\d{10}$/.test( values.telefono ) ? null : 'Número de telefono invalido',
+          addressNumber: /^\d{1,5}$/.test( values.addressNumber ) ? null : 'Número de dirección invalido',
+
         };
       }
 

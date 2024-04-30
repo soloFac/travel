@@ -13,14 +13,14 @@ export enum PaymentType {
 export class OrderInfoEntity {
   public name: string
   public phone: string
-  public deliveryType: DeliveryType
-  public address: string
-  public addressNumber: string
   public comments: string
-  public zone: ZoneEntity
   public paymentType: PaymentType
+  public deliveryType: DeliveryType
+  public address?: string
+  public addressNumber?: string
+  public zone?: ZoneEntity
 
-  constructor ( name: string, phone: string, deliveryType: DeliveryType, address: string, addressNumber: string, comments: string, zone: ZoneEntity, paymentType: PaymentType ) {
+  constructor ( name: string, phone: string, comments: string, paymentType: PaymentType, deliveryType: DeliveryType, address: string | undefined, addressNumber: string | undefined, zone: ZoneEntity | undefined ) {
     this.name = name
     this.phone = phone
     this.deliveryType = deliveryType

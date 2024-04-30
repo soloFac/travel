@@ -1,7 +1,7 @@
 import { TextInput, Title } from '@mantine/core'
 import { UseFormReturnType } from '@mantine/form'
 
-import { FormValues } from '@/components'
+import { FormValues, RadioSetStates } from '@/components'
 import { useAppSelector } from '@/hooks'
 import { DeliveryType, ZoneEntity } from '@/models'
 import { ZonesRadioButtons } from './ZonesRadioButtons'
@@ -11,11 +11,13 @@ import { DeliveryRadioButtons } from './DeliveryRadioButtons'
 
 interface OrderInfoFormProps {
   form: UseFormReturnType<FormValues>
+  radioSetStates: RadioSetStates
 }
 
 // Todo: cuando ya se realizo el pedido y se quiere realizar otro, los valores del formulario deberían permanecer (excepto los de los pedidos)
 
-export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
+export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form, radioSetStates } ) => {
+  const { setZoneRadio, setDeliveryRadio, setPaymentRadio } = radioSetStates
   // console.log( ...form.values )
   // console.log( 'values: ', values )
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
@@ -23,7 +25,7 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
   return (
     <div className={classes.last_step_container}>
       <Title className={classes.title}>Realizar Pedido</Title>
-      <div className={classes.form_container}>
+      <form className={classes.form_container}>
         <TextInput
           label='Nombre'
           placeholder='Ej: Juan Perez'
@@ -43,7 +45,7 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
           required
         />
         
-        <DeliveryRadioButtons form={form} />
+        <DeliveryRadioButtons form={form} setDeliveryRadio={setDeliveryRadio} />
 
         { ( zones.length > 0 && form.getValues().deliveryType === DeliveryType.DELIVERY ) && (
           <>
@@ -66,7 +68,7 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
               required
             />
         
-            <ZonesRadioButtons form={form} />          
+            <ZonesRadioButtons form={form} setZoneRadio={setZoneRadio} />          
           </>
         ) }
 
@@ -77,7 +79,7 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
           className={`${ classes.input } ${ classes.comments }`}
           key={ 'comments' }
         />
-      </div>
+      </form>
     </div>
   )
 }

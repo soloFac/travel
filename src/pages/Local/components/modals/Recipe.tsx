@@ -14,13 +14,20 @@ import { showNotification } from '@mantine/notifications';
 export interface FormValues {
   name: string
   phone: string
-  deliveryType: string
-  address: string
-  addressNumber: string
-  zone: ZoneEntity
   coments: string
   paymentType: string
+  deliveryType: string
+  address?: string
+  addressNumber?: string
+  zone?: ZoneEntity
 }
+
+export interface RadioSetStates {
+  setZoneRadio: ( zone: ZoneEntity ) => void
+  setDeliveryRadio: ( delivery: DeliveryType ) => void
+  setPaymentRadio: ( payment: PaymentType ) => void
+}
+
 
 export const Recipe = () => {
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
@@ -43,9 +50,9 @@ export const Recipe = () => {
     return {
       name: ( values.name.trim().length < 3 || values.name.trim().length > 40 ) ? 'Nombre debería tener al menos 3 caracteres y ser menor a 40 caracteres' : null,
       phone: /^\d{10}$/.test( values.phone ) ? null : 'Número de telefono invalido, debería tener 10 dígitos ejemplo: 3815668899',
-      deliveryType: ( !isMemberOfEnum( values.deliveryType, DeliveryType ) ? 'Tipo de entrega invalido' : null ),
+      deliveryType: ( !isMemberOfEnum( deliveryRadio, DeliveryType ) ? 'Tipo de entrega invalido' : null ),
       comments: values.comments.trim().length > 100 ? 'Comentarios deberían ser menores a 100 caracteres' : null,
-      paymentType: ( !isMemberOfEnum( values.paymentType, PaymentType ) ? 'Tipo de pago invalido' : null ),
+      paymentType: ( !isMemberOfEnum( paymentRadio, PaymentType ) ? 'Tipo de pago invalido' : null ),
     }
   }
 
@@ -54,12 +61,12 @@ export const Recipe = () => {
       address: ( values.address.trim().length < 3 || values.address.trim().length > 50 ) ? 'Dirección debería tener al menos 5 caracteres y ser menor a 50' : null,
       // addressNumber debería ser menor a 5 caracteres y solo números
       addressNumber: /^\d{1,6}$/.test( values.addressNumber ) ? null : 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres',
-      zone: ( !values.zone ) ? 'Zona invalida' : null,
+      zone: ( !zoneRadio ) ? 'Zona invalida' : null,
     }
   }
 
   if ( zones.length > 0 ) {
-    Object.defineProperty( initialValues, 'zone', { value: zones[0].name, writable: true } );
+    Object.defineProperty( initialValues, 'zone', { value: zoneRadio, writable: true } );
     Object.defineProperty( initialValues, 'address', { value: '', writable: true } );
     Object.defineProperty( initialValues, 'addressNumber', { value: '', writable: true } );
   }
@@ -80,6 +87,10 @@ export const Recipe = () => {
       return {};
     },
   } );
+
+  // if ( DeliveryType.DELIVERY === deliveryRadio ) {
+  //   form.setFieldValue( 'zone', zoneRadio )
+  // }
 
   const nextStep = () =>
     setActive( ( current ) => {
@@ -113,7 +124,7 @@ export const Recipe = () => {
         </Stepper.Step>
 
         <Stepper.Step display={'flex'} label='Ultimo Paso' description='Realizar pedido'>
-          <OrderInfoForm form={form} />
+          <OrderInfoForm form={form} radioSetStates={{ setZoneRadio, setDeliveryRadio, setPaymentRadio }} />
         </Stepper.Step>
 
         <Stepper.Completed >

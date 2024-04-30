@@ -7,12 +7,12 @@ export class OrderInfoDto {
   constructor (
     public name: string,
     public phone: string,
-    public deliveryType: DeliveryType,
-    public address: string,
-    public addressNumber: string,
     public comments: string,
-    public zone: ZoneEntity,
     public paymentType: PaymentType,
+    public deliveryType: DeliveryType,
+    public address?: string,
+    public addressNumber?: string,
+    public zone?: ZoneEntity,
   ) {}
 
   static create ( orderInfo: OrderInfoEntity ): [ string?, OrderInfoEntity? ] {
@@ -26,30 +26,36 @@ export class OrderInfoDto {
       return ['phone length must be equal to 10']
     }
 
-    if ( !validString( address, 3, 50 ) ) {
-      return ['address length must be more than 1 and less than 50']
-    }
-
-    if ( !validString( addressNumber, 1, 6 ) ) {
-      return ['addressNumber length must be more than 1 and less than 6']
-    }
-
     if ( !validString( comments, 1, 100 ) ) {
       return ['comments length must be more than 1 and less than 100']
     }
 
-    const [err, zoneDto] = ZoneDto.create( zone )
-    if ( !zoneDto ) { return [err] }
-
     if ( !isMemberOfEnum( deliveryType, DeliveryType ) ) {
       return ['Delivery must belong to DeliveryType']
+    }
+
+    if ( deliveryType === DeliveryType.DELIVERY ) {
+      if ( !address || !addressNumber || !zone ) {
+        return ['Delivery address, number and zone are required']
+      }
+
+      if ( !validString( address, 3, 50 ) ) {
+        return ['address length must be more than 1 and less than 50']
+      }
+  
+      if ( !validString( addressNumber, 1, 6 ) ) {
+        return ['addressNumber length must be more than 1 and less than 6']
+      }
+
+      const [err, zoneDto] = ZoneDto.create( zone )
+      if ( !zoneDto ) { return [err] }
     }
 
     if ( !isMemberOfEnum( paymentType, PaymentType ) ) {
       return ['Payment must belong to PaymentType']
     }
 
-    const orderInfoDto = new OrderInfoEntity( name, phone, deliveryType, address, addressNumber, comments, zone, paymentType )
+    const orderInfoDto = new OrderInfoEntity( name, phone, comments, paymentType, deliveryType, address, addressNumber, zone )
     return [undefined, orderInfoDto]
   }
 }

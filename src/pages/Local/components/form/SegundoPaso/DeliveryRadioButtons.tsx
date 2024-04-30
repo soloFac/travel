@@ -8,19 +8,16 @@ import classes from '../../../styles/form/SegundoPaso/DeliveryRadioButtons.modul
 
 interface DeliveryRadioButtonsProps {
   form: UseFormReturnType<FormValues>
+  setDeliveryRadio: ( delivery: DeliveryType ) => void
 }
 
-export const DeliveryRadioButtons: React.FC<DeliveryRadioButtonsProps> = ( { form } ) => {
-  const setDeliveryType = ( value: string ) => {
-    form.setFieldValue( 'deliveryType', value )
-  }
-
+export const DeliveryRadioButtons: React.FC<DeliveryRadioButtonsProps> = ( { form, setDeliveryRadio } ) => {
   return (
     <Radio.Group
       label='Tipo de entrega:'
-      onChange={( value ) => setDeliveryType( value )}
-      defaultValue={form.getValues().deliveryType}
+      onChange={( value ) => setDeliveryRadio( value as DeliveryType )}
       className={classes.radio_group}
+      defaultValue={DeliveryType.PICKUP}
       withAsterisk
       required
     >

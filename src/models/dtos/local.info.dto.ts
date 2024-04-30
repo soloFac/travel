@@ -1,5 +1,5 @@
 import { getValidatedDtos } from '@/types';
-import { FoodCategoryEntity, LocalInfoEntity, MenuEntity, ScheduleEntity, ZoneEntity } from '../entities';
+import { FoodCategoryEntity, LocalInfoEntity, MenuEntity, ScheduleEntity, TransferEntity, ZoneEntity } from '../entities';
 import { TransferDto } from './transfer.dto';
 import { CustomError } from '../errors';
 import { validString } from '@/helper';
@@ -10,6 +10,18 @@ import { FoodCategoryDto } from './foodcategory.dto';
 
 export class LocalInfoDto {
   constructor (
+    public id: string,
+    public name: string, //*
+    public address: string,
+    public whatsapp: string, //*
+    public instagram: string | null = null,
+    public icon: string | null = null,
+    public transfer: TransferEntity,
+    public schedules: ScheduleEntity[],
+    public menus: MenuEntity[],
+    public categories: FoodCategoryEntity[],
+    public active: boolean = true,
+    public zones?: ZoneEntity[] 
   ) {}
 
   static create = ( localInfo: LocalInfoEntity ): [ string?, LocalInfoEntity? ] => {

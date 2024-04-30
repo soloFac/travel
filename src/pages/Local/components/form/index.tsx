@@ -1,2 +1,2 @@
 export * from './OrderForm'
-export * from './OrderInfoForm'
+export * from './SegundoPaso/OrderInfoForm'

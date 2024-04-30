@@ -1,19 +1,19 @@
 import { ActionIcon, Button, Title } from '@mantine/core';
-import classes from '../../styles/OrderCart.module.css';
+
 import { useAppSelector } from '@/hooks';
 import { ImageMenu, DeleteIcon } from '@/components';
-import { OptionsMenuCard } from '../OptionsMenuCard';
+import { OptionsMenuCard } from '../../OptionsMenuCard';
 import { LocalEntity, MenuEntity, OrderEntity } from '@/models';
 import { CalculateTotalOrders } from '@/utils';
-import { useOrderActions } from '../../hooks';
-import React from 'react';
 
+import classes from '../../../styles/form/PrimerPaso/OrderCart.module.css';
+import { useOrderActions } from '@/pages/Local/hooks';
 
 interface OrderCartProps {
-  handleSendOrder: () => void
+  handleContinue: () => void
 }
 
-export const OrderCart: React.FC<OrderCartProps> = ( { handleSendOrder } ) => {
+export const OrderCart: React.FC<OrderCartProps> = ( { handleContinue } ) => {
   const { orders } = useAppSelector( ( state: any ) => state.order )
   const local: LocalEntity = useAppSelector( ( state: any ) => state.localInfo ).local
 
@@ -67,7 +67,8 @@ export const OrderCart: React.FC<OrderCartProps> = ( { handleSendOrder } ) => {
         <Title className={classes.total_title}>Total:</Title>
         <p className={classes.total_value}>${CalculateTotalOrders( orders )}</p>
       </div>
-      <Button onClick={handleSendOrder} className={classes.submit_btn} variant={'filled'} color='white'>Continuar</Button>
+      {( orders.length !== 0 ) ? <Button onClick={handleContinue} className={classes.submit_btn} variant={'filled'} color='white'>Continuar</Button> : null}
+      
     </div>
   )
 }

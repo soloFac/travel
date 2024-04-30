@@ -1,5 +1,4 @@
 
-interface RadioButtonsProps {}
 
 export const RadioButtons = ( ) => {
   return (

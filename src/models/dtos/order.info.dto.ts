@@ -18,15 +18,15 @@ export class OrderInfoDto {
   static create ( orderInfo: OrderInfoEntity ): [ string?, OrderInfoEntity? ] {
     const { name, phone, deliveryType, address, addressNumber, comments, zone, paymentType } = orderInfo
 
-    if ( !validString( name, 1, 40 ) ) {
+    if ( !validString( name, 3, 40 ) ) {
       return ['name length must be more than 1 and less than 40']
     }
 
     if ( !validString( phone, 10, 10 ) ) {
-      return ['phone length must be more than 9 and less than 10']
+      return ['phone length must be equal to 10']
     }
 
-    if ( !validString( address, 1, 50 ) ) {
+    if ( !validString( address, 3, 50 ) ) {
       return ['address length must be more than 1 and less than 50']
     }
 

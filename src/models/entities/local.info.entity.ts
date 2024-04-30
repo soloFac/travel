@@ -13,10 +13,10 @@ export class LocalInfoEntity {
   public icon: string | null = null
   public transfer: TransferEntity
   public schedules: ScheduleEntity[]
-  public zones: ZoneEntity[]
   public menus: MenuEntity[]
   public categories: FoodCategoryEntity[]
   public active: boolean = true
+  public zones?: ZoneEntity[] 
 
   constructor (
     id: string, name: string, address: string, whatsapp: string, instagram: string | null, icon: string | null, transfer: TransferEntity, schedules: ScheduleEntity[], zones: ZoneEntity[], menus: MenuEntity[], categories: FoodCategoryEntity[], active: boolean

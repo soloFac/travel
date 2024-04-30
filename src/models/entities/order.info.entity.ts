@@ -1,13 +1,13 @@
 import { ZoneEntity } from './zone.entity';
 
 export enum DeliveryType {
-  DELIVERY = 'DELIVERY',
-  PICKUP = 'PICKUP'
+  PICKUP = 'retiro',
+  DELIVERY = 'delivery'
 }
 
 export enum PaymentType {
-  EFECTIVO = 'EFECTIVO',
-  TRANSFERENCIA = 'TRANSFERENCIA'
+  CASH = 'efectivo',
+  TRANSFER = 'transferencia'
 }
 
 export class OrderInfoEntity {

@@ -27,10 +27,6 @@ export const LocalPage = () => {
         <Recipe />
       </ModalMantine>
 
-      {/* <ModalMantine opened={openedPersonalForm} close={closePersonalForm}>
-        <OrderPersonalForm />
-      </ModalMantine> */}
-
       {( local ) ?
         <div className={classes.container}>
           <LocalCard {...local} />

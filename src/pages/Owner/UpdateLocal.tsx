@@ -25,7 +25,6 @@ export const UpdateLocal = () => {
     updateLocal( JSON.parse( local ) )
 
     // const data = await LocalService.UpdateLocal( JSON.parse( local ), token )
-    // console.log( '-----------DATA-----------:', data )
   }
 
   return (

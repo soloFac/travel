@@ -20,15 +20,6 @@ export const LocalPage = () => {
   const { local } = useAppSelector( state => state.localInfo )
 
   const [openedCart, { open: openCart, close: closeCart }] = useDisclosure( false );
-  // const [openedPersonalForm, { open: openPersonalForm, close: closePersonalForm }] = useDisclosure( false );
-
-  useEffect( () => {
-    console.log( 'useEffect', localName )
-    if ( localName ) { getLocal( localName ) }
-    console.log( 'local', local )
-  }
-  , [localName] )
-
 
   return (
     <section className={classes.section}>

@@ -9,8 +9,6 @@ interface CheckBoxButtonsProps {
 }
 
 export const CheckBoxButtons: React.FC<CheckBoxButtonsProps> = ( { values, setOptionsCheckbox } ) => {
-  // const { values } = values
-  // console.log( 'values: ', values )
   return (
     <div className={classes.container}>
       {

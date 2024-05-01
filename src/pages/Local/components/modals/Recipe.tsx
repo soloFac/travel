@@ -43,9 +43,12 @@ export const Recipe = () => {
   const initialValues = {
     name: '',
     phone: '',
-    deliveryType: DeliveryType.PICKUP,
     comments: '',
     paymentType: PaymentType.CASH,
+    deliveryType: DeliveryType.PICKUP,
+    zone: undefined,
+    address: undefined,
+    addressNumber: undefined,
   }
 
   const orderValidation = ( values: any ) => {
@@ -71,9 +74,8 @@ export const Recipe = () => {
   // - Agrego propiedades al form para realizar las validaciones cuando seleccionan Delivery!
   if ( zones.length > 0 ) {
     Object.defineProperty( initialValues, 'zone', { value: '', writable: true } );
-    Object.defineProperty( initialValues, 'address', { value: 'hola', writable: true } );
+    Object.defineProperty( initialValues, 'address', { value: '', writable: true } );
     Object.defineProperty( initialValues, 'addressNumber', { value: '', writable: true } );
-    console.log( `initialValues --- ${ JSON.stringify( initialValues ) }` )
   }
 
   const form = useForm( {
@@ -114,6 +116,7 @@ export const Recipe = () => {
 
   const handleSendOrder = () => {
     // console.log( 'handleSendOrder' )
+    console.log( form.getValues() )
     nextStep()
     // sendWhatsappMessage( orders, local )
     // todo: clean orders

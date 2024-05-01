@@ -25,7 +25,6 @@ export class LocalInfoDto {
   ) {}
 
   static create = ( localInfo: LocalInfoEntity ): [ string?, LocalInfoEntity? ] => {
-    console.log( 'LocalInfoDto create', localInfo )
     const { id, name, address, whatsapp, instagram, icon, transfer, schedules, zones, menus, categories, active } = localInfo
 
     if ( !validString( id, 3, 36 ) ) { throw CustomError.notFound( 'LocalDto: Local name is not a ValidString' ) }

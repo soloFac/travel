@@ -6,8 +6,6 @@ export function GetValidatedOrder ( menu: MenuEntity, menuName: string, variant:
   const { local } = useAppSelector( state => state.localInfo )
   // Todo: en realidad debería recuperar los datos desde la API.
 
-  console.log( 'Dressings: ', amount );
-
   const extrasSelected: Extra[] = []
   const dressingsSelected: string[] = []
   let total = 0
@@ -18,11 +16,9 @@ export function GetValidatedOrder ( menu: MenuEntity, menuName: string, variant:
 
   const variantSelected = menu.variants.find( ( v: VariantEntity ) => v.name.toLowerCase() === variant )
   if ( !variantSelected ) { return 'No se ha encontrado la variante' }
-  console.log( 'variantSelected: ', variantSelected )
 
   const category = local?.categories.find( ( c ) => c.name.toLowerCase() === menu.category.toLowerCase() )
 
-  console.log( 'category: ', category )
   
   extras.forEach( ( extra ) => {
     const extraSelected = category?.extras?.find( ( e ) => e.name.toLowerCase() === extra )

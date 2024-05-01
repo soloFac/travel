@@ -43,10 +43,10 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
           key={ 'phone' }
           required
         />
-        
-        <DeliveryRadioButtons form={form} />
 
-        { ( zones.length > 0 && form.getValues().deliveryType === DeliveryType.DELIVERY ) && (
+        {( zones.length > 0 ) ? <DeliveryRadioButtons form={form} /> : null}
+
+        { ( form.getValues().deliveryType === DeliveryType.DELIVERY ) && (
           <>
             <TextInput
               label='Dirección'

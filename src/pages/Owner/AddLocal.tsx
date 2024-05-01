@@ -13,7 +13,6 @@ export const AddLocal = () => {
   } )
 
   const handleAddLocal = () => {
-    console.log( 'handleAddLocal' )
     if ( form.validate().hasErrors ) return
 
     const local = JSON.parse( form.getValues().local ) as LocalDto

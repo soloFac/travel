@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Stepper, Button, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { OrderCart, OrderInfoForm } from '@/pages/Local/components';
@@ -14,7 +14,7 @@ import { showNotification } from '@mantine/notifications';
 export interface FormValues {
   name: string
   phone: string
-  coments: string
+  comments: string
   paymentType: string
   deliveryType: string
   address?: string
@@ -22,25 +22,12 @@ export interface FormValues {
   zone?: string
 }
 
-export interface RadioSetStates {
-  setZoneRadio: ( zone: string ) => void
-  deliveryRadio: string
-  setDeliveryRadio: ( delivery: DeliveryType ) => void
-  setPaymentRadio: ( payment: PaymentType ) => void
-}
-
 export const Recipe = () => {
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
   
   const [active, setActive] = useState( 0 );
 
-
-  // const [deliveryRadio, setDeliveryRadio] = useState( DeliveryType.PICKUP )
-  // const [zoneRadio, setZoneRadio] = useState( firstZone )
-  // console.log( `---- zoneRadio: ${ zoneRadio } ----` )
-  const [paymentRadio, setPaymentRadio] = useState( PaymentType.CASH )
-
-  const initialValues = {
+  const initialValues: FormValues = {
     name: '',
     phone: '',
     comments: '',

@@ -1,7 +1,7 @@
 import { TextInput, Title } from '@mantine/core'
 import { UseFormReturnType } from '@mantine/form'
 
-import { FormValues, RadioSetStates } from '@/components'
+import { FormValues } from '@/components'
 import { useAppSelector } from '@/hooks'
 import { DeliveryType, ZoneEntity } from '@/models'
 import { ZonesRadioButtons } from './ZonesRadioButtons'
@@ -11,7 +11,6 @@ import { DeliveryRadioButtons } from './DeliveryRadioButtons'
 
 interface OrderInfoFormProps {
   form: UseFormReturnType<FormValues>
-  radioSetStates: RadioSetStates
 }
 
 // Todo: cuando ya se realizo el pedido y se quiere realizar otro, los valores del formulario deberían permanecer (excepto los de los pedidos)

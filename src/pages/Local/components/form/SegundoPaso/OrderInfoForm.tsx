@@ -16,8 +16,7 @@ interface OrderInfoFormProps {
 
 // Todo: cuando ya se realizo el pedido y se quiere realizar otro, los valores del formulario deberían permanecer (excepto los de los pedidos)
 
-export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form, radioSetStates } ) => {
-  const { setZoneRadio, setDeliveryRadio, setPaymentRadio } = radioSetStates
+export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
   // console.log( ...form.values )
   // console.log( 'values: ', values )
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
@@ -28,24 +27,24 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form, radioSetSta
       <form className={classes.form_container}>
         <TextInput
           label='Nombre'
+          autoComplete='name'
           placeholder='Ej: Juan Perez'
           {...form.getInputProps( 'name' )}
           className={`${ classes.input } ${ classes.name }`}
           key={ 'name' }
-          autoComplete='name'
           required
         />
         <TextInput
           label='Teléfono'
+          autoComplete='tel-local'
           placeholder='Ej: 3815794360'
           {...form.getInputProps( 'phone' )}
           className={`${ classes.input } ${ classes.telefono }`}
           key={ 'phone' }
-          autoComplete='tel-local'
           required
         />
         
-        <DeliveryRadioButtons form={form} setDeliveryRadio={setDeliveryRadio} />
+        <DeliveryRadioButtons form={form} />
 
         { ( zones.length > 0 && form.getValues().deliveryType === DeliveryType.DELIVERY ) && (
           <>
@@ -68,7 +67,7 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form, radioSetSta
               required
             />
         
-            <ZonesRadioButtons form={form} setZoneRadio={setZoneRadio} />          
+            <ZonesRadioButtons form={form} />          
           </>
         ) }
 

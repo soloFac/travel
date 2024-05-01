@@ -9,16 +9,15 @@ import classes from '../../../styles/form/SegundoPaso/ZonesRadioButtons.module.c
 
 interface ZonesRadioButtonsProps {
   form: UseFormReturnType<FormValues>
-  setZoneRadio: ( zone: ZoneEntity ) => void
 }
 
-export const ZonesRadioButtons: React.FC<ZonesRadioButtonsProps> = ( { form, setZoneRadio } ) => {
+export const ZonesRadioButtons: React.FC<ZonesRadioButtonsProps> = ( { form } ) => {
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
 
   const setZone = ( value: string ) => {
     const zoneSelected = zones.find( ( zone: ZoneEntity ) => zone.name === value )
     if ( !zoneSelected ) return
-    setZoneRadio( zoneSelected )
+    form.setFieldValue( 'zone', zoneSelected.name )
 
     showNotification( { 
       title: `Zona de envio ${ zoneSelected.name }: `, message: ` ${ zoneSelected.addresses[0] } - ${ zoneSelected.addresses[1] } - ${ zoneSelected.addresses[2] } - ${ zoneSelected.addresses[3] }`,
@@ -36,6 +35,7 @@ export const ZonesRadioButtons: React.FC<ZonesRadioButtonsProps> = ( { form, set
       label='Zona de envio:'
       onChange={( value ) => setZone( value )}
       className={classes.radio_group}
+      defaultValue={form.getValues().zone || zones[0].name}
       withAsterisk
       required
     >

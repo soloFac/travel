@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Stepper, Button, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { OrderCart, OrderInfoForm } from '@/pages/Local/components';
@@ -19,40 +19,42 @@ export interface FormValues {
   deliveryType: string
   address?: string
   addressNumber?: string
-  zone?: ZoneEntity
+  zone?: string
 }
 
 export interface RadioSetStates {
-  setZoneRadio: ( zone: ZoneEntity ) => void
+  setZoneRadio: ( zone: string ) => void
+  deliveryRadio: string
   setDeliveryRadio: ( delivery: DeliveryType ) => void
   setPaymentRadio: ( payment: PaymentType ) => void
 }
-
 
 export const Recipe = () => {
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
   
   const [active, setActive] = useState( 0 );
 
-  const [zoneRadio, setZoneRadio] = useState( zones.length > 0 ? zones[0] : '' )
-  const [deliveryRadio, setDeliveryRadio] = useState( DeliveryType.PICKUP )
+
+  // const [deliveryRadio, setDeliveryRadio] = useState( DeliveryType.PICKUP )
+  // const [zoneRadio, setZoneRadio] = useState( firstZone )
+  // console.log( `---- zoneRadio: ${ zoneRadio } ----` )
   const [paymentRadio, setPaymentRadio] = useState( PaymentType.CASH )
 
   const initialValues = {
     name: '',
     phone: '',
-    deliveryType: deliveryRadio,
+    deliveryType: DeliveryType.PICKUP,
     comments: '',
-    paymentType: paymentRadio,
+    paymentType: PaymentType.CASH,
   }
 
   const orderValidation = ( values: any ) => {
     return {
       name: ( values.name.trim().length < 3 || values.name.trim().length > 40 ) ? 'Nombre debería tener al menos 3 caracteres y ser menor a 40 caracteres' : null,
       phone: /^\d{10}$/.test( values.phone ) ? null : 'Número de telefono invalido, debería tener 10 dígitos ejemplo: 3815668899',
-      deliveryType: ( !isMemberOfEnum( deliveryRadio, DeliveryType ) ? 'Tipo de entrega invalido' : null ),
+      deliveryType: ( !isMemberOfEnum( values.deliveryType, DeliveryType ) ? 'Tipo de entrega invalido' : null ),
       comments: values.comments.trim().length > 100 ? 'Comentarios deberían ser menores a 100 caracteres' : null,
-      paymentType: ( !isMemberOfEnum( paymentRadio, PaymentType ) ? 'Tipo de pago invalido' : null ),
+      paymentType: ( !isMemberOfEnum( values.paymentType, PaymentType ) ? 'Tipo de pago invalido' : null ),
     }
   }
 
@@ -61,14 +63,17 @@ export const Recipe = () => {
       address: ( values.address.trim().length < 3 || values.address.trim().length > 50 ) ? 'Dirección debería tener al menos 5 caracteres y ser menor a 50' : null,
       // addressNumber debería ser menor a 5 caracteres y solo números
       addressNumber: /^\d{1,6}$/.test( values.addressNumber ) ? null : 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres',
-      zone: ( !zoneRadio ) ? 'Zona invalida' : null,
+      // Cambiar, hacer que compruebe que pertenece al array de zonas
+      zone: ( !values.zone ) ? 'Por favor selecciona una zona' : null,
     }
   }
 
+  // - Agrego propiedades al form para realizar las validaciones cuando seleccionan Delivery!
   if ( zones.length > 0 ) {
-    Object.defineProperty( initialValues, 'zone', { value: zoneRadio, writable: true } );
-    Object.defineProperty( initialValues, 'address', { value: '', writable: true } );
+    Object.defineProperty( initialValues, 'zone', { value: '', writable: true } );
+    Object.defineProperty( initialValues, 'address', { value: 'hola', writable: true } );
     Object.defineProperty( initialValues, 'addressNumber', { value: '', writable: true } );
+    console.log( `initialValues --- ${ JSON.stringify( initialValues ) }` )
   }
 
   const form = useForm( {
@@ -77,7 +82,7 @@ export const Recipe = () => {
 
     validate: ( values ): any => {
       if ( active === 1 ) {
-        if ( zones?.length > 0 && deliveryRadio === DeliveryType.DELIVERY ) {
+        if ( values.deliveryType === DeliveryType.DELIVERY && zones.length > 0 ) {
           const validation = Object.assign( orderValidation( values ), zoneValidation( values ) )
           return validation
         }
@@ -88,14 +93,12 @@ export const Recipe = () => {
     },
   } );
 
-  // if ( DeliveryType.DELIVERY === deliveryRadio ) {
-  //   form.setFieldValue( 'zone', zoneRadio )
-  // }
-
   const nextStep = () =>
     setActive( ( current ) => {
       if ( form.validate().hasErrors ) {
-        if ( !form.isValid( 'zone' ) ) { showNotification( { title: 'Zona invalida', message: 'Por favor selecciona una zona', color: 'red' } ) }
+        if ( !form.isValid( 'zone' ) ) { 
+          showNotification( { title: 'Zona invalida', message: 'Por favor selecciona una zona', color: 'red' } ) 
+        }
         return current;
       }
       return current < 2 ? current + 1 : current;
@@ -124,7 +127,7 @@ export const Recipe = () => {
         </Stepper.Step>
 
         <Stepper.Step display={'flex'} label='Ultimo Paso' description='Realizar pedido'>
-          <OrderInfoForm form={form} radioSetStates={{ setZoneRadio, setDeliveryRadio, setPaymentRadio }} />
+          <OrderInfoForm form={form} />
         </Stepper.Step>
 
         <Stepper.Completed >

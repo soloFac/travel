@@ -8,11 +8,10 @@ import { addNewLocal, savingNewLocal } from './localSlice'
 export const startNewLocal = ( local: LocalDto ) => {
   return async ( dispatch: any ) => {
     try {
-      console.log( 'thunk startNewLocal' )
       dispatch( savingNewLocal() )
 
       // const docId = `${ crypto.randomUUID() }`
-      const newDoc = doc( collection( FirebaseDB, 'locals' ), local.name.replace( /\s/g, '' ) as string )
+      const newDoc = doc( collection( FirebaseDB, 'locals' ), local.name.replace( /\s/g, '' ).toLowerCase() as string )
 
       await setDoc( newDoc, local )
 

@@ -39,7 +39,7 @@ export const Recipe = () => {
     phone: '',
     comments: '',
     paymentType: PaymentType.CASH,
-    deliveryType: ( zones.length > 0 ) ? DeliveryType.PICKUP : undefined,
+    deliveryType: DeliveryType.PICKUP,
     zone: '',
     address: '',
     addressNumber: '',
@@ -120,7 +120,7 @@ export const Recipe = () => {
 
     const message = getWhatsappMessage( orders, orderInfo as OrderInfoDto )
     const encodedMessage = encodeUrl( message )
-    window.open( `https://wa.me/${ local.whatsapp }?text=${ encodedMessage }`, '_blank' )
+    window.open( `https://api.whatsapp.com/send/?phone=${ local.whatsapp }&text=${ encodedMessage }`, '_blank' )
 
     deleteOrders()
   }

@@ -49,17 +49,17 @@ export const getWhatsappMessage = ( orders: OrderEntity[], orderInfo: OrderInfoD
     extraMsg = ''
     if ( order.dressing !== undefined ) {
       if ( order.dressing.length > 0 ) {
-        dressingMsg +=  '🥗 Aderezos\n' 
+        dressingMsg +=  '\t🥗 Aderezos\n' 
         order.dressing.map( ( dressing: string ) => {
-          dressingMsg += `    * ${ dressing }\n`
+          dressingMsg += `\t\t * ${ Capitalize( dressing ) }\n`
         } )
       }
     }
     if ( order.extras !== undefined ) {
       if ( order.extras.length > 0 ) {
-        extraMsg += '🥓 _Extras_\n'
+        extraMsg += '\t🥓 _Extras_\n'
         order.extras.map( ( extra: Extra ) => {
-          extraMsg += `    * ${ extra.name }, ${ extra.price }\n` 
+          extraMsg += `\t\t * ${ Capitalize( extra.name ) } $${ Capitalize( extra.price.toString() ) }\n` 
         } )
       }
     }
@@ -75,6 +75,7 @@ export const getWhatsappMessage = ( orders: OrderEntity[], orderInfo: OrderInfoD
     Hola, quiero hacer el siguiente pedido:
     ${ orderMsg }  
     ${ ( orderInfo.zone !== undefined ) ? `Costo de Envio: *$${ orderInfo.zone.price }*` : '' }
+    Tipo de Pedido: *${ Capitalize( orderInfo.deliveryType ) }*
     Pedido: *$${ CalculateTotalOrders( orders ) }*
     Método de Pago: [ *${ orderInfo.paymentType }* ]
     ${ ( orderInfo.comments !== '' && orderInfo.comments.length > 0 ) ? `Comments: ${ orderInfo.comments }` : '' }

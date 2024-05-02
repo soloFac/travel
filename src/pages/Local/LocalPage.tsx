@@ -9,12 +9,24 @@ import { useAppSelector } from '@/hooks';
 import { Recipe } from '@/components';
 
 import classes from './styles/LocalPage.module.css';
+import { useParams } from 'react-router-dom';
+import { useLocalInfoActions } from './hooks';
+import { useEffect } from 'react';
 
 export const LocalPage = () => {
   // set local to useState
   const { local } = useAppSelector( state => state.localInfo )
 
   const [openedCart, { open: openCart, close: closeCart }] = useDisclosure( false );
+
+  const { localName } = useParams()
+  // set local to useState
+  const { getLocal } = useLocalInfoActions()
+
+  useEffect( () => {
+    if ( localName ) { getLocal( localName ) }
+  }
+  , [localName] )
 
   return (
     <section className={classes.section}>

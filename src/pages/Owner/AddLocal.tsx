@@ -9,19 +9,35 @@ export const AddLocal = () => {
   const { addLocal } = useLocalActions()
 
   const form = useForm( {
-    initialValues: { local: '' }
+    initialValues: { local: '', token: '' },
+    validate: {
+      token: ( value: string ) => ( value.trim().length !== 9 ? 'Token must be 9 digits' : null ),
+    },
   } )
 
   const handleAddLocal = () => {
     if ( form.validate().hasErrors ) return
 
-    const local = JSON.parse( form.getValues().local ) as LocalDto
+    const { local, token } = form.getValues()
 
-    addLocal( local )
+    if ( token !== 'MI-TOK3N_' ) {
+      alert( 'Invalid token' )
+      return
+    }
+
+    addLocal( JSON.parse( local ) as LocalDto )
   }
 
   return (
     <>
+      <TextInput
+        label='Token'
+        placeholder='your token'
+        key={ 'token' }
+        {...form.getInputProps( 'token' )}
+        required
+      />
+      
       <TextInput
         className={classes.text}
         label='LocalJSON' placeholder='paste your local JSON here' 

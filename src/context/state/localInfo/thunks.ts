@@ -41,7 +41,7 @@ const getLocalWithImage = async ( local: LocalInfoEntity ) => {
     } )
 
   local.menus = await Promise.all( local.menus.map( async ( menu ) => {
-    const storageRef = ref( FirebaseStorage, `images/menus/${ local.name.replace( / /g, '' ) }/${ menu.image }` );
+    const storageRef = ref( FirebaseStorage, `images/menus/${ local.name.replace( / /g, '' ).toLowerCase() }/${ menu.image }` );
     menu.image = await getDownloadURL( storageRef );
 
     return menu;

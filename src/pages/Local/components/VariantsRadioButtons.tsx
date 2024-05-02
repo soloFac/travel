@@ -1,6 +1,7 @@
 import { Group, Radio } from '@mantine/core'
 import classes from '../styles/VariantsRadioButtons.module.css'
 import { VariantEntity } from '@/models'
+import { getPlainString } from '@/utils'
 
 interface VariantsRadioButtonsProps {
   variants: VariantEntity[],
@@ -15,7 +16,7 @@ export const VariantsRadioButtons: React.FC<VariantsRadioButtonsProps> = ( { var
       className={classes.radioGroup}
       // label='Selecciona tu opción:'
       value={selectedRadio}
-      onChange={( value ) => setSelectedRadio( value.toLowerCase() )}
+      onChange={( value ) => setSelectedRadio( getPlainString( value ) )}
       withAsterisk
       required
     >
@@ -24,7 +25,7 @@ export const VariantsRadioButtons: React.FC<VariantsRadioButtonsProps> = ( { var
           <Radio key={index} 
             className={classes.radio}
             color='red.4'
-            value={variant.name}
+            value={getPlainString( variant.name )}
             error={error}
             label={
               <div className={classes.text}>{variant.name}

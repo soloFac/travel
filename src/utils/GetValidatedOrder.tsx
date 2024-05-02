@@ -1,5 +1,6 @@
 import { useAppSelector } from '@/hooks'
 import { Extra, MenuEntity, OrderDto, OrderEntity, VariantEntity } from '@/models'
+import { getPlainString } from './getPlainString'
 
 export function GetValidatedOrder ( menu: MenuEntity, menuName: string, variant: string, dressings: string[], extras: string[], amount: number ): OrderDto | string {
 
@@ -14,14 +15,14 @@ export function GetValidatedOrder ( menu: MenuEntity, menuName: string, variant:
   }
   
   const variantSelected = menu.variants.find( ( _variant: VariantEntity ) => 
-    _variant.name.toLowerCase() === variant )
+    getPlainString( _variant.name ) === getPlainString( variant ) )
   if ( !variantSelected ) { return 'No se ha encontrado la variante' }
 
   const category = local?.categories.find( ( _category ) => 
-    _category.name.toLowerCase() === menu.category.toLowerCase() )
+    getPlainString( _category.name ) === getPlainString( menu.category ) )
 
   extras.forEach( ( extra ) => {
-    const extraSelected = category?.extras?.find( ( e ) => e.name.toLowerCase() === extra )
+    const extraSelected = category?.extras?.find( ( e ) => getPlainString( e.name ) === getPlainString( extra ) )
     if ( extraSelected ) {
       extrasSelected.push( extraSelected )
     } else {

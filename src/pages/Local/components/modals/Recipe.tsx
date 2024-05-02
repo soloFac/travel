@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { Stepper, Button, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { OrderCart, OrderInfoForm } from '@/pages/Local/components';
+import encodeUrl from 'encodeurl'
 
+import { OrderCart, OrderInfoForm } from '@/pages/Local/components';
 import { GetValidatedOrderInfo, getWhatsappMessage, isMemberOfEnum } from '@/utils';
-import { DeliveryType, OrderInfoDto, OrderInfoEntity, PaymentType, ZoneEntity } from '@/models';
+import { DeliveryType, LocalInfoEntity, OrderInfoDto, OrderInfoEntity, PaymentType, ZoneEntity } from '@/models';
 import { useAppSelector } from '@/hooks';
 import { WhatsappIcon } from '@/components';
 
 import classes from '../../styles/Recipe.module.css';
 import { showNotification } from '@mantine/notifications';
+import { useOrderActions } from '../../hooks';
 
 export interface FormValues {
   name: string
@@ -23,10 +25,12 @@ export interface FormValues {
 }
 
 export const Recipe = () => {
-  const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
+  const { deleteOrders } = useOrderActions()
+
+  const local: LocalInfoEntity = useAppSelector( ( state: any ) => state.localInfo.local )
+  const zones: ZoneEntity[] = ( local.zones !== undefined ) ? local.zones : []
   
   const [active, setActive] = useState( 0 );
-  const [message, setMessage] = useState( '' )
 
   const orders = useAppSelector( ( state: any ) => state.order.orders )
 
@@ -85,12 +89,6 @@ export const Recipe = () => {
     },
   } );
 
-  // useEffect( () => {
-  //   if ( form.getValues().deliveryType === DeliveryType.PICKUP ) {
-  //     form.setValues( { address: undefined, addressNumber: undefined, zone: undefined } )
-  //   }
-  // }, [form] )
-
   const nextStep = () =>
     setActive( ( current ) => {
       if ( form.validate().hasErrors ) {
@@ -114,22 +112,17 @@ export const Recipe = () => {
 
 
   const handleSendOrder = () => {
-    // console.log( 'handleSendOrder' )
-    console.log( 'formValues: ', form.getValues() )
     const orderInfo: OrderInfoEntity | string = GetValidatedOrderInfo( form.getValues(), zones )
     if ( typeof orderInfo === 'string' ) {
       showNotification( { title: 'Error', message: orderInfo, color: 'red' } )
       return
     }
 
-    console.log( ` values: ${ JSON.stringify( orderInfo ) } ` )
-
-
     const message = getWhatsappMessage( orders, orderInfo as OrderInfoDto )
-    setMessage( message )
-    console.log( 'message: ', message )
-    // todo: clean orders
-    // nextStep()
+    const encodedMessage = encodeUrl( message )
+    window.open( `https://wa.me/${ local.whatsapp }?text=${ encodedMessage }`, '_blank' )
+
+    deleteOrders()
   }
 
   return (

@@ -51,7 +51,7 @@ export const getWhatsappMessage = ( orders: OrderEntity[], orderInfo: OrderInfoD
       if ( order.dressing.length > 0 ) {
         dressingMsg +=  '🥗 Aderezos\n' 
         order.dressing.map( ( dressing: string ) => {
-          dressingMsg += `    * ${ dressing } * \n`
+          dressingMsg += `    * ${ dressing }\n`
         } )
       }
     }
@@ -59,7 +59,7 @@ export const getWhatsappMessage = ( orders: OrderEntity[], orderInfo: OrderInfoD
       if ( order.extras.length > 0 ) {
         extraMsg += '🥓 _Extras_\n'
         order.extras.map( ( extra: Extra ) => {
-          extraMsg += `    * ${ extra.name }, ${ extra.price } *\n` 
+          extraMsg += `    * ${ extra.name }, ${ extra.price }\n` 
         } )
       }
     }
@@ -80,14 +80,14 @@ export const getWhatsappMessage = ( orders: OrderEntity[], orderInfo: OrderInfoD
   
     ${ ( orderInfo.zone !== undefined ) ? `Costo de Envio: *$${ orderInfo.zone.price }*` : '' }
     Pedido: *$${ CalculateTotalOrders( orders ) }*
-    Método de Pago: *${ orderInfo.paymentType }*
+    Método de Pago: [ * ${ orderInfo.paymentType } * ]
 
     ${ ( orderInfo.comments !== '' && orderInfo.comments.length > 0 ) ? `Comments: ${ orderInfo.comments }` : '' }
 
-    Total: *$${ CalculateTotalOrders( orders ) + ( ( orderInfo.zone !== undefined ) ? orderInfo.zone.price : 0 ) }*
+    Total: * 💰 $${ CalculateTotalOrders( orders ) + ( ( orderInfo.zone !== undefined ) ? orderInfo.zone.price : 0 ) } 💰*
 
     🙂 ${ orderInfo.name } 🙂
-    ${ ( orderInfo.address !== undefined ) ? `${ orderInfo.address }` : '' }
+     ${ ( orderInfo.address !== undefined ) ? `🚀 ${ orderInfo.address } 🚀` : '' } 
     -  ${ orderInfo.phone }  -
 
   `

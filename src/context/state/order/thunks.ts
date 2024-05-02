@@ -1,5 +1,5 @@
 import { OrderEntity } from '@/models'
-import { deleteOrder, fetchOrders, fetchOrdersError, fetchOrdersSuccess } from './orderSlice'
+import { deleteAllOrders, deleteOrder, fetchOrders, fetchOrdersError, fetchOrdersSuccess } from './orderSlice'
 
 // const API_URL = 'https://api.example.com/orders'
 
@@ -21,6 +21,18 @@ export const startDeletingOrder = ( id: string ) => {
 
     try {
       dispatch( deleteOrder( { id } ) )
+    } catch ( error ) {
+      dispatch( fetchOrdersError( error ) )
+    }
+  }
+}
+
+export const startDeleteAllOrders = () => {
+  return async ( dispatch: any ) => {
+    dispatch( fetchOrders() )
+
+    try {
+      dispatch( deleteAllOrders( ) )
     } catch ( error ) {
       dispatch( fetchOrdersError( error ) )
     }

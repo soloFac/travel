@@ -1,4 +1,4 @@
-import { startAddMenu, startDeletingOrder } from '@/context'
+import { startAddMenu, startDeleteAllOrders, startDeletingOrder } from '@/context'
 import { useAppDispatch } from '@/hooks'
 import { OrderEntity } from '@/models'
 
@@ -12,6 +12,10 @@ export const useOrderActions = () => {
   const deleteMenu = ( id: string ) => {
     dispatch( startDeletingOrder( id ) )
   }
+  
+  const deleteOrders = (  ) => {
+    dispatch( startDeleteAllOrders( ) )
+  }
 
-  return { addMenu, deleteMenu }
+  return { addMenu, deleteMenu, deleteOrders }
 }

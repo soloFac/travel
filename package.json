@@ -16,6 +16,7 @@
     "@mantine/notifications": "^7.8.1",
     "@reduxjs/toolkit": "^2.2.3",
     "@typescript-eslint/parser": "^6.0.0",
+    "encodeurl": "^2.0.0",
     "eslint-config-prettier": "^9.1.0",
     "firebase": "^10.11.1",
     "primereact": "^10.6.3",
@@ -26,6 +27,7 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
+    "@types/encodeurl": "^1.0.2",
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",

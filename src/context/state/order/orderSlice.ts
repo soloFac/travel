@@ -31,6 +31,10 @@ export const orderSlice = createSlice( {
       state.orders = state.orders.filter( ( order ) => order.id !== action.payload.id )
       state.loading = false
     },
+    deleteAllOrders: ( state ) => {
+      state.orders = []
+      state.loading = false
+    },
     fetchOrdersError: ( state, action ) => {
       state.error = action.payload
       state.loading = false
@@ -38,7 +42,7 @@ export const orderSlice = createSlice( {
   },
 } )
 
-export const { fetchOrders, fetchOrdersSuccess, deleteOrder, fetchOrdersError } = orderSlice.actions
+export const { fetchOrders, fetchOrdersSuccess, deleteOrder, deleteAllOrders, fetchOrdersError } = orderSlice.actions
 
 export const selectOrders = ( state: any ) => state.order.orders
 

@@ -64,9 +64,7 @@ export const getWhatsappMessage = ( orders: OrderEntity[], orderInfo: OrderInfoD
       }
     }
     orderMsg += `
-      🥡 *x${ order.amount } ${ Capitalize( order.menu ) } - ${ Capitalize( order.variant.name ) }* 🥡 *$${ order.amount * order.variant.price }*
-      ${ dressingMsg }
-      ${ extraMsg }
+      🥡 *x${ order.amount } ${ Capitalize( order.menu ) } - ${ Capitalize( order.variant.name ) }* 🥡 *$${ order.amount * order.variant.price }* \n ${ dressingMsg } ${ extraMsg }
       💵 Subtotal: *$${ order.total }*
     `
   } )
@@ -75,17 +73,14 @@ export const getWhatsappMessage = ( orders: OrderEntity[], orderInfo: OrderInfoD
 
   return `
     Hola, quiero hacer el siguiente pedido:
-
-    ${ orderMsg }
-  
+    ${ orderMsg }  
     ${ ( orderInfo.zone !== undefined ) ? `Costo de Envio: *$${ orderInfo.zone.price }*` : '' }
     Pedido: *$${ CalculateTotalOrders( orders ) }*
-    Método de Pago: [ * ${ orderInfo.paymentType } * ]
-
+    Método de Pago: [ *${ orderInfo.paymentType }* ]
     ${ ( orderInfo.comments !== '' && orderInfo.comments.length > 0 ) ? `Comments: ${ orderInfo.comments }` : '' }
 
-    Total: * 💰 $${ CalculateTotalOrders( orders ) + ( ( orderInfo.zone !== undefined ) ? orderInfo.zone.price : 0 ) } 💰*
-
+    Total: 💰 *$${ CalculateTotalOrders( orders ) + ( ( orderInfo.zone !== undefined ) ? orderInfo.zone.price : 0 ) }* 💰
+    
     🙂 ${ orderInfo.name } 🙂
      ${ ( orderInfo.address !== undefined ) ? `🚀 ${ orderInfo.address } 🚀` : '' } 
     -  ${ orderInfo.phone }  -

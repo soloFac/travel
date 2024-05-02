@@ -7,10 +7,10 @@ export class OrderEntity {
   amount: number
   total: number
   variant: VariantEntity
-  dressing?: string[] | undefined
-  extras?: Extra[] | undefined
+  dressing?: string[]
+  extras?: Extra[]
 
-  constructor ( id: string, menu: string, variante: VariantEntity, cantidad: number, total: number, aderezos: string[], extras: Extra[] ) {
+  constructor ( id: string, menu: string, amount: number, total: number, variante: VariantEntity, dressing?: string[], extras?: Extra[] ) {
     if ( id !== '' && id !== undefined && id !== null ) {
       this.id = id
     } else {
@@ -18,9 +18,9 @@ export class OrderEntity {
     }
     this.menu = menu
     this.variant = variante
-    this.amount = cantidad
+    this.amount = amount
     this.total = total
-    this.dressing = aderezos
+    this.dressing = dressing
     this.extras = extras
   }
 }

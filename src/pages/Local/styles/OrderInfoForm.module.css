@@ -58,3 +58,50 @@
 .nro {
   width: 30% !important;
 }
+
+.total_container {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: end !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: fit-content !important;
+  margin-right: 60px !important;
+  /* margin-top: 10px !important; */
+  /* background-color: rgba(123, 147, 255, 0.13); */
+}
+
+.total_title {
+  font-family: 'FibraOneSemiBold' !important;
+  font-size: 28px !important;
+  color: white !important;
+  margin-right: 15px !important;
+  text-shadow: 
+    1px 1px 10px #c5c5c5,
+    1px 1px 10px #c5c5c5,
+    1px 1px 10px #c5c5c5,
+    1px 1px 10px #c5c5c5,
+    1px 1px 10px #c5c5c5,
+    1px 1px 10px #c5c5c5 !important;
+}
+
+.total_value {
+  font-family: 'FibraOneBold' !important;
+  font-size: 20px !important;
+  color: #2C2C2C !important;
+}
+
+.transfer {
+  width: 100% !important;
+  margin-top: -5px !important;
+  margin-bottom: 10px !important;
+  margin-left: 30px !important;
+  /* background-color: red !important; */
+  font-size: 13px !important;
+  font-family: 'LexendRegular' !important;
+  color: #818181 !important;
+}
+
+.transfer_info {
+  margin-left: 5px !important;
+}

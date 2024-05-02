@@ -3,11 +3,14 @@ import { UseFormReturnType } from '@mantine/form'
 
 import { FormValues } from '@/components'
 import { useAppSelector } from '@/hooks'
-import { DeliveryType, ZoneEntity } from '@/models'
+import { DeliveryType, OrderEntity, PaymentType, TransferEntity, ZoneEntity } from '@/models'
 import { ZonesRadioButtons } from './ZonesRadioButtons'
 
 import classes from '../../../styles/OrderInfoForm.module.css'
 import { DeliveryRadioButtons } from './DeliveryRadioButtons'
+import { calculateTotalOrders } from '@/utils'
+import { useEffect, useState } from 'react'
+import { PaymentTypeRadioButtons } from './PaymentTypeRadioButtons'
 
 interface OrderInfoFormProps {
   form: UseFormReturnType<FormValues>
@@ -19,6 +22,30 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
   // console.log( ...form.values )
   // console.log( 'values: ', values )
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
+  const orders: OrderEntity[] = useAppSelector( ( state: any ) => state.order.orders )
+  const transfer: TransferEntity = useAppSelector( ( state: any ) => state.localInfo.local.transfer )
+
+
+  const [totalOrder, setTotalOrder] = useState( 0 )
+
+  const orderTotal = calculateTotalOrders( orders )
+
+  const [hasUpdatedValues, setHasUpdatedValues] = useState( false );
+
+  useEffect( () => {
+    console.log( form.values )
+    const zoneSelected = zones.find( ( z: ZoneEntity ) => z.name === form.getValues().zone )
+    if ( zoneSelected && form.getValues().deliveryType === DeliveryType.DELIVERY ) {
+      setTotalOrder( orderTotal + zoneSelected.price )
+    } 
+    else if ( form.getValues().deliveryType === DeliveryType.PICKUP && !hasUpdatedValues ) {
+      form.setValues( { zone: undefined, address: undefined, addressNumber: undefined } )
+      setHasUpdatedValues( true );
+      setTotalOrder( orderTotal )
+    } else {
+      setTotalOrder( orderTotal )
+    }
+  }, [form, hasUpdatedValues] )
 
   return (
     <div className={classes.last_step_container}>
@@ -70,6 +97,17 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
           </>
         ) }
 
+        <PaymentTypeRadioButtons form={form} />
+
+        { ( form.getValues().paymentType === PaymentType.TRANSFER ) ? 
+          ( <div className={classes.transfer}>
+            <p className={classes.name}>Nombre: <span className={classes.transfer_info}>{transfer.name}</span></p>
+            <p className={classes.alias}>Alias: <span className={classes.transfer_info}>{transfer.alias}</span></p>
+            <p className={classes.cbu}>CBU: <span className={classes.transfer_info}>{transfer.cbu}</span></p>
+          </div> )
+          : null
+        }
+
         <TextInput
           label='Comentarios'
           placeholder='Ej: Sin cebolla'
@@ -78,6 +116,11 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { form } ) => {
           key={ 'comments' }
         />
       </form>
+
+      <div className={classes.total_container}>
+        <Title className={classes.total_title}>Total:</Title>
+        <p className={classes.total_value}>${totalOrder}</p>
+      </div>
     </div>
   )
 }

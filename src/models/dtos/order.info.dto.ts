@@ -18,6 +18,8 @@ export class OrderInfoDto {
   static create ( orderInfo: OrderInfoEntity ): [ string?, OrderInfoEntity? ] {
     const { name, phone, deliveryType, address, addressNumber, comments, zone, paymentType } = orderInfo
 
+    console.log( 'zone: ', zone )
+
     if ( !validString( name, 3, 40 ) ) {
       return ['name length must be more than 1 and less than 40']
     }
@@ -26,7 +28,7 @@ export class OrderInfoDto {
       return ['phone length must be equal to 10']
     }
 
-    if ( !validString( comments, 1, 100 ) ) {
+    if ( !validString( comments, -1, 100 ) ) {
       return ['comments length must be more than 1 and less than 100']
     }
 
@@ -35,6 +37,9 @@ export class OrderInfoDto {
     }
 
     if ( deliveryType === DeliveryType.DELIVERY ) {
+      
+      console.log( 'ZONE: ', zone )
+
       if ( !address || !addressNumber || !zone ) {
         return ['Delivery address, number and zone are required']
       }
@@ -46,7 +51,6 @@ export class OrderInfoDto {
       if ( !validString( addressNumber, 1, 6 ) ) {
         return ['addressNumber length must be more than 1 and less than 6']
       }
-
       const [err, zoneDto] = ZoneDto.create( zone )
       if ( !zoneDto ) { return [err] }
     }

@@ -35,7 +35,7 @@ export const ZonesRadioButtons: React.FC<ZonesRadioButtonsProps> = ( { form } ) 
       label='Zona de envio:'
       onChange={( value ) => setZone( value )}
       className={classes.radio_group}
-      defaultValue={form.getValues().zone || zones[0].name}
+      defaultValue={form.getValues().zone}
       withAsterisk
       required
     >

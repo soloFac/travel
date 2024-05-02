@@ -16,7 +16,7 @@ interface MenuCardProps {
 }
 
 export const MenuCard: React.FC<MenuCardProps> = ( { menu, dressings, extras } ) => {
-  const { name, image, variants, description, price } = menu;
+  const { name, image, variants, description } = menu;
 
   const [opened, { open, close }] = useDisclosure( false );
 
@@ -68,7 +68,7 @@ export const MenuCard: React.FC<MenuCardProps> = ( { menu, dressings, extras } )
         : null}
       
       <div className={classes.price}>
-        ${price}
+        ${variants[0].price}
       </div>
       
       {/* <Badge color='white' size='sm' variant='light' className={classes.badge}>

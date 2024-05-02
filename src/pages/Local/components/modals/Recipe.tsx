@@ -3,8 +3,8 @@ import { Stepper, Button, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { OrderCart, OrderInfoForm } from '@/pages/Local/components';
 
-import { isMemberOfEnum } from '@/utils';
-import { DeliveryType, PaymentType, ZoneEntity } from '@/models';
+import { GetValidatedOrderInfo, getWhatsappMessage, isMemberOfEnum } from '@/utils';
+import { DeliveryType, OrderInfoDto, OrderInfoEntity, PaymentType, ZoneEntity } from '@/models';
 import { useAppSelector } from '@/hooks';
 import { WhatsappIcon } from '@/components';
 
@@ -16,7 +16,7 @@ export interface FormValues {
   phone: string
   comments: string
   paymentType: string
-  deliveryType: string
+  deliveryType?: string
   address?: string
   addressNumber?: string
   zone?: string
@@ -26,16 +26,19 @@ export const Recipe = () => {
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
   
   const [active, setActive] = useState( 0 );
+  const [message, setMessage] = useState( '' )
+
+  const orders = useAppSelector( ( state: any ) => state.order.orders )
 
   const initialValues: FormValues = {
     name: '',
     phone: '',
     comments: '',
     paymentType: PaymentType.CASH,
-    deliveryType: DeliveryType.PICKUP,
-    zone: undefined,
-    address: undefined,
-    addressNumber: undefined,
+    deliveryType: ( zones.length > 0 ) ? DeliveryType.PICKUP : undefined,
+    zone: '',
+    address: '',
+    addressNumber: '',
   }
 
   const orderValidation = ( values: any ) => {
@@ -50,9 +53,9 @@ export const Recipe = () => {
 
   const zoneValidation = ( values: any ) => {
     return {
-      address: ( values.address.trim().length < 3 || values.address.trim().length > 50 ) ? 'Dirección debería tener al menos 5 caracteres y ser menor a 50' : null,
+      address: ( values.address === undefined || values.address.trim().length < 3 || values.address.trim().length > 50 ) ? 'Dirección debería tener al menos 5 caracteres y ser menor a 50' : null,
       // addressNumber debería ser menor a 5 caracteres y solo números
-      addressNumber: /^\d{1,6}$/.test( values.addressNumber ) ? null : 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres',
+      addressNumber: /^\d{1,6}$/.test( values?.addressNumber ) ? null : 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres',
       // Cambiar, hacer que compruebe que pertenece al array de zonas
       zone: ( !values.zone ) ? 'Por favor selecciona una zona' : null,
     }
@@ -82,12 +85,15 @@ export const Recipe = () => {
     },
   } );
 
+  // useEffect( () => {
+  //   if ( form.getValues().deliveryType === DeliveryType.PICKUP ) {
+  //     form.setValues( { address: undefined, addressNumber: undefined, zone: undefined } )
+  //   }
+  // }, [form] )
+
   const nextStep = () =>
     setActive( ( current ) => {
       if ( form.validate().hasErrors ) {
-        if ( !form.isValid( 'zone' ) ) { 
-          showNotification( { title: 'Zona invalida', message: 'Por favor selecciona una zona', color: 'red' } ) 
-        }
         return current;
       }
       return current < 2 ? current + 1 : current;
@@ -97,16 +103,33 @@ export const Recipe = () => {
 
   const handleContinue = () => {
     // Verify if the orders are valid
+    console.log( 'VALUES: ', form.getValues() )
+    if ( form.validate().hasErrors ) {
+      if ( !form.isValid( 'zone' ) ) { 
+        showNotification( { title: 'Zona invalida', message: 'Por favor selecciona una zona', color: 'red' } ) 
+      }
+    }
     nextStep();
   }
 
 
   const handleSendOrder = () => {
     // console.log( 'handleSendOrder' )
-    console.log( form.getValues() )
-    nextStep()
-    // sendWhatsappMessage( orders, local )
+    console.log( 'formValues: ', form.getValues() )
+    const orderInfo: OrderInfoEntity | string = GetValidatedOrderInfo( form.getValues(), zones )
+    if ( typeof orderInfo === 'string' ) {
+      showNotification( { title: 'Error', message: orderInfo, color: 'red' } )
+      return
+    }
+
+    console.log( ` values: ${ JSON.stringify( orderInfo ) } ` )
+
+
+    const message = getWhatsappMessage( orders, orderInfo as OrderInfoDto )
+    setMessage( message )
+    console.log( 'message: ', message )
     // todo: clean orders
+    // nextStep()
   }
 
   return (
@@ -123,7 +146,7 @@ export const Recipe = () => {
         <Stepper.Completed >
           <div className={classes.step_completed_container}>
             <WhatsappIcon size={35} extraClasses={classes.step_whatsapp_icon}/>
-            <p>Serás redireccionado a Whatsapp para completar tu pedido.</p>
+            <p>Serás redireccionado a Whatsapp para finalizar tu pedido.</p>
           </div>
         </Stepper.Completed>
       </Stepper>

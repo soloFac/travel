@@ -14,6 +14,10 @@ export class ZoneDto {
   static create ( zone: ZoneEntity ): [ string?, ZoneEntity? ] {
     const { addresses, name, price } = zone
 
+    console.log( 'addresses: ', addresses )
+    console.log( 'name: ', name )
+    console.log( 'price: ', price )
+
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if ( !addresses || !name || !price ) {
       return ['Los datos para crear una zona son incorrectos']

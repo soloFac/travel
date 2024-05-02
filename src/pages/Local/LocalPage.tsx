@@ -1,13 +1,14 @@
-import { Cart, HeaderMegaMenu, ModalMantine } from '@/components'
+import { useDisclosure } from '@mantine/hooks';
+import { ActionIcon } from '@mantine/core';
 
+import { Cart, HeaderMegaMenu, ModalMantine } from '@/components'
 import { LocalCard } from './components';
-import classes from './styles/LocalPage.module.css';
 import { Badges } from '@/components/ui/Badges';
 import { MenusCategoryCards } from './components/MenusCategoryCards';
 import { useAppSelector } from '@/hooks';
-import { ActionIcon } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { Recipe } from '@/components';
+
+import classes from './styles/LocalPage.module.css';
 
 export const LocalPage = () => {
   // set local to useState

@@ -21,7 +21,7 @@
   --box-shadow-hover: 0 0 10px var(--price-color);
   --font-color-title: rgb(255, 44, 29);
   --font-color-text: rgb(114, 32, 32);
-  --card-min-width: 25%;
+  --card-min-width: 250px;
   --card-width: 400px;
   --card-min-height: min-content;
   --card-height: 190px;
@@ -39,11 +39,6 @@
   /* Para Animaciones */
 }
 
-:asd {
-  --mantine-font-size-xs: 12px;
-}
-
-
 
 .card {
   background-color: var(--bg-color-card)  !important;
@@ -58,7 +53,7 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
-  margin: 1em 2em;
+  margin: 1em 1em;
   padding: 0 !important;
   overflow: visible !important;
   font-family: 'FibraOneSemibold';

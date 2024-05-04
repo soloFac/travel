@@ -44,7 +44,9 @@ export const LocalPage = () => {
         <div className={classes.container}>
           <LocalCard {...local} />
 
-          <Badges categories={local.categories} />
+          <div className={classes.badges_container}>
+            <Badges categories={local.categories} />
+          </div>
 
           <article className={classes.article}>
             {local.categories.map( ( menu, i ) => (

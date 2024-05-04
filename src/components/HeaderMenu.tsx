@@ -99,7 +99,7 @@ const DesktopMenuOptions = ( { drawerOpened, toggleDrawer, status, children }: a
           <AuthButtons />
         </Group> */}
 
-        <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom='sm' />
+        {/* <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom='sm' /> */}
 
         {children}
       </Group>
@@ -107,7 +107,7 @@ const DesktopMenuOptions = ( { drawerOpened, toggleDrawer, status, children }: a
   )
 }
 
-const ResponsiveMenuOptions = ( { drawerOpened, closeDrawer, status }: any ) => {
+const ResponsiveMenuOptions = ( { drawerOpened, closeDrawer, status, children }: any ) => {
   return (
     <Drawer
       opened={drawerOpened}

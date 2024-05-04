@@ -19,7 +19,7 @@
   align-items: center;
   border: 3px solid var(--border-color);
   border-radius: 1.5em;
-  width: 450px;
+  width: 90% !important;
   height: 300px;
   min-height: min-content;
   -webkit-border-radius: 1.5em;
@@ -90,9 +90,11 @@
 
 }
 
+
+
 .schedules_btn {
   background-color: #DEDEDE !important;
-  width: 30% !important;
+  width: min-content !important;
   color: #000 !important;
   margin-top: 5px;
   margin-bottom: 10px;

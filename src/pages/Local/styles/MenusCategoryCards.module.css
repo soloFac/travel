@@ -16,7 +16,7 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  margin-top: 20px !important;
+  margin-top: 5px !important;
 }
 
 .categories_container {
@@ -26,7 +26,7 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   background-color: var(--bg-color);
-  padding: 2em 0 !important;
+  padding: 1em 0 !important;
   overflow: hidden;
 }
 

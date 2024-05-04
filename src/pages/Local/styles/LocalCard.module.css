@@ -62,8 +62,7 @@
   font-family: 'FibraOneSemibold' !important;
   text-transform: capitalize;
   font-size: 30px !important;
-  margin-top: 10px !important;
-  background-color: #fff;
+  background-color: #fff; 
 }
 
 .divider {
@@ -103,4 +102,12 @@
   -moz-border-radius: 12px !important;
   -ms-border-radius: 12px !important;
   -o-border-radius: 12px !important;
+}
+
+/* Para vistas de anchos menores a 550 cambiar el tamaño de la fuente del titulo */
+
+@media (max-width: 550px) {
+  .title {
+    font-size: 20px !important;
+  }
 }

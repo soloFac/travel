@@ -75,7 +75,7 @@ export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras, 
     addMenu( order )
     showNotification( {
       title: 'Pedido agregado correctamente',
-      message: 'Puedes ver arriba a la derecha el carrito de pedido 🤥',
+      message: 'Puedes ver arriba a la izquierda el carrito de pedido 🤥',
     } )
     // close modal
     closeModal()

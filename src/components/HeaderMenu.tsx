@@ -1,4 +1,4 @@
-import { Group, Divider, Box, Burger, Drawer, ScrollArea, rem } from '@mantine/core';
+import { Group, Divider, Box, Drawer, ScrollArea, rem } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Link } from 'react-router-dom'
 
@@ -71,7 +71,7 @@ export const HeaderMegaMenu: React.FC<HeaderMegaMenuProps> = ( { children } ) =>
     </Box>
   )}
   
-const DesktopMenuOptions = ( { drawerOpened, toggleDrawer, status, children }: any ) => {
+const DesktopMenuOptions = ( { status, children }: any ) => {
   
   return (
     <header className={classes.header}>
@@ -107,7 +107,7 @@ const DesktopMenuOptions = ( { drawerOpened, toggleDrawer, status, children }: a
   )
 }
 
-const ResponsiveMenuOptions = ( { drawerOpened, closeDrawer, status, children }: any ) => {
+const ResponsiveMenuOptions = ( { drawerOpened, closeDrawer, status }: any ) => {
   return (
     <Drawer
       opened={drawerOpened}

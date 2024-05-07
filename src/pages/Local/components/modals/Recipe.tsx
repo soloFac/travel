@@ -92,6 +92,7 @@ export const Recipe = () => {
   const nextStep = () =>
     setActive( ( current ) => {
       if ( form.validate().hasErrors ) {
+        alert( 'The form has errors' )
         return current;
       }
       return current < 2 ? current + 1 : current;

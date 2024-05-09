@@ -57,56 +57,56 @@ interface OrderInfoFormProps {
 }
 
 export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) => {
-  const { addOrderInfo } = useOrderInfoActions()
+  // const { addOrderInfo } = useOrderInfoActions()
   
-  // - STATE VALUES
-  const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
-  // const orders: OrderEntity[] = useAppSelector( ( state: any ) => state.order.orders )
-  const transfer: TransferEntity = useAppSelector( ( state: any ) => state.localInfo.local.transfer )
+  // // - STATE VALUES
+  // const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
+  // // const orders: OrderEntity[] = useAppSelector( ( state: any ) => state.order.orders )
+  // const transfer: TransferEntity = useAppSelector( ( state: any ) => state.localInfo.local.transfer )
 
-  const [paymentType, setPaymentType] = useState( PaymentType.CASH )
-  const [deliveryType, setDeliveryType] = useState( DeliveryType.PICKUP )
-  const [zone, setZone] = useState( '' )
+  // const [paymentType, setPaymentType] = useState( PaymentType.CASH )
+  // const [deliveryType, setDeliveryType] = useState( DeliveryType.PICKUP )
+  // const [zone, setZone] = useState( '' )
   
-  // const [totalOrder, setTotalOrder] = useState( 0 )
-  // const orderTotal = calculateTotalOrders( orders )
+  // // const [totalOrder, setTotalOrder] = useState( 0 )
+  // // const orderTotal = calculateTotalOrders( orders )
 
-  const {
-    formState: { name, phone, comments },
-    formValidation: { nameValid, phoneValid, commentsValid },
-    onInputChange,
-    // errors
-    isFormValid
-  } = useForm( formData, formValidations )
+  // const {
+  //   formState: { name, phone, comments },
+  //   formValidation: { nameValid, phoneValid, commentsValid },
+  //   onInputChange,
+  //   // errors
+  //   isFormValid
+  // } = useForm( formData, formValidations )
 
-  const {
-    formState: { address, addressNumber },
-    formValidation: { addressValid, addressNumberValid },
-    // errors
-    onInputChange: onInputChangeDelivery,
-    isFormValid: isFormValidDelivery
-  } = useForm( formDeliveryData, formDeliveryValidations )
+  // const {
+  //   formState: { address, addressNumber },
+  //   formValidation: { addressValid, addressNumberValid },
+  //   // errors
+  //   onInputChange: onInputChangeDelivery,
+  //   isFormValid: isFormValidDelivery
+  // } = useForm( formDeliveryData, formDeliveryValidations )
 
-  console.log( name, phone, comments, paymentType, deliveryType, zone )
-  // console.log( 'isFormValid: ', isFormValid )
-  console.log( nameValid, phoneValid, commentsValid )
+  // console.log( name, phone, comments, paymentType, deliveryType, zone )
+  // // console.log( 'isFormValid: ', isFormValid )
+  // console.log( nameValid, phoneValid, commentsValid )
   
-  useEffect( () => {
-    if ( deliveryType === DeliveryType.DELIVERY ) {
-      console.log( 'es delivery' )
-      setFormValid( isFormValid() && isFormValidDelivery() )
-    } else {
-      setFormValid( isFormValid() )
-    }
+  // useEffect( () => {
+  //   if ( deliveryType === DeliveryType.DELIVERY ) {
+  //     console.log( 'es delivery' )
+  //     setFormValid( isFormValid() && isFormValidDelivery() )
+  //   } else {
+  //     setFormValid( isFormValid() )
+  //   }
 
-    // setInfoState
-    const orderInfo = GetValidatedOrderInfo( { name, phone, comments, paymentType, deliveryType, address, addressNumber, zone }, zones )
-    if ( typeof orderInfo === 'string' ) {
-      console.error( orderInfo )
-      return
-    }
-    addOrderInfo( orderInfo )
-  }, [nameValid, phoneValid, commentsValid, paymentType, deliveryType, address, zone] )
+  //   // setInfoState
+  //   const orderInfo = GetValidatedOrderInfo( { name, phone, comments, paymentType, deliveryType, address, addressNumber, zone }, zones )
+  //   if ( typeof orderInfo === 'string' ) {
+  //     console.error( orderInfo )
+  //     return
+  //   }
+  //   addOrderInfo( orderInfo )
+  // }, [nameValid, phoneValid, commentsValid, paymentType, deliveryType, address, zone] )
   
   return (
     <div className={classes.last_step_container}>
@@ -118,9 +118,9 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
           placeholder='Ej: Juan Perez'
           className={`${ classes.input } ${ classes.name }`}
           name='name'
-          error={nameValid}
-          value={name}
-          onChange={onInputChange}
+          // error={nameValid}
+          // value={name}
+          // onChange={onInputChange}
           required
         />
         <TextInput
@@ -129,22 +129,22 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
           placeholder='Ej: 3815794360'
           className={`${ classes.input } ${ classes.telefono }`}
           name='phone'
-          error={phoneValid}
-          value={phone}
-          onChange={onInputChange}
+          // error={phoneValid}
+          // value={phone}
+          // onChange={onInputChange}
           required
         />
 
         
-        {( zones.length > 0 ) ? 
+        {/* {( zones.length > 0 ) ? 
           <DeliveryRadioButtons
             deliveryType={deliveryType}
             setDeliveryType={setDeliveryType}
           /> 
           : null
-        }
+        } */}
 
-        { ( deliveryType === DeliveryType.DELIVERY ) ? (
+        {/* { ( deliveryType === DeliveryType.DELIVERY ) ? (
           <>
             <TextInput
               label='Dirección'
@@ -152,9 +152,9 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
               className={`${ classes.input } ${ classes.address }`}
               autoComplete='street-address'
               name='address'
-              error={addressValid}
-              value={address}
-              onChange={onInputChangeDelivery}
+              // error={addressValid}
+              // value={address}
+              // onChange={onInputChangeDelivery}
               required
             />
             <TextInput
@@ -162,9 +162,9 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
               placeholder='Ej: 123'
               className={`${ classes.input } ${ classes.addressNumber }`}
               name='addressNumber'
-              error={addressNumberValid}
-              value={addressNumber}
-              onChange={onInputChangeDelivery}
+              // error={addressNumberValid}
+              // value={addressNumber}
+              // onChange={onInputChangeDelivery}
               required
             />
             <ZonesRadioButtons
@@ -174,9 +174,9 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
           </>
         ) 
           : null
-        }
+        } */}
         
-        <PaymentTypeRadioButtons 
+        {/* <PaymentTypeRadioButtons 
           paymentType={paymentType}
           setPaymentType={setPaymentType} 
         />
@@ -187,16 +187,16 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
             <p className={classes.alias}>Alias: <span className={classes.transfer_info}>{transfer.alias}</span></p>
             <p className={classes.cbu}>CBU: <span className={classes.transfer_info}>{transfer.cbu}</span></p>
           </div>
-        ) : null}
+        ) : null} */}
 
         <TextInput
           label='Comentarios'
           placeholder='Ej: comentario adicional para el pedido...'
           className={`${ classes.input } ${ classes.comments }`}
-          error={commentsValid}
+          // error={commentsValid}
+          // value={comments}
+          // onChange={onInputChange}
           name='comments'
-          value={comments}
-          onChange={onInputChange}
         />
       </form>
 

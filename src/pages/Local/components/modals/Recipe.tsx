@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { Stepper, Button, Group } from '@mantine/core';
 
 import { OrderCart, OrderInfoForm } from '@/pages/Local/components';
-import { LocalInfoEntity, ZoneEntity } from '@/models';
-import { useAppSelector } from '@/hooks';
 import { WhatsappIcon } from '@/components';
 
 import classes from '../../styles/Recipe.module.css';
@@ -14,9 +12,6 @@ import { showNotification } from '@mantine/notifications';
 export const Recipe = () => {
   // const { deleteOrders } = useOrderActions()
 
-  const local: LocalInfoEntity = useAppSelector( ( state: any ) => state.localInfo.local )
-  const zones: ZoneEntity[] = ( local.zones !== undefined ) ? local.zones : []
-  
   const [active, setActive] = useState( 0 );
 
   const [formValid, setFormValid] = useState( false )
@@ -29,8 +24,7 @@ export const Recipe = () => {
   const nextStep = () =>
     setActive( ( current ) => {
       // Validate Form
-      if ( zones.length < 0 ) {
-        alert( 'The form has errors' )
+      if ( !formValid ) {
         return current;
       }
       return current < 2 ? current + 1 : current;
@@ -41,10 +35,8 @@ export const Recipe = () => {
   const handleContinue = () => {
     // Verify if the orders are valid
     // Validar formulario
-    console.log( 'formValid', formValid )
     if ( !formValid ) {
       showNotification( { title: 'Error en los datos del formulario', message: 'Varifique que los datos hayan sido completados correctamente', color: 'red' } ) 
-      alert( 'Formulario invalido' )
       return
     }
     nextStep();

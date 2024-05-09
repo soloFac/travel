@@ -18,7 +18,7 @@ const initialState: OrderInfoState = getPersistedStateLocalStorage( 'orderInfo',
 
 export const orderInfoSlice = createSlice( {
   name: 'orderinfo',
-  initialState,
+  initialState: DEFAULT_STATE,
   reducers: {
     startSaving: ( state ) => {
       state.loading = true

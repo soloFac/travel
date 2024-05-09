@@ -3,9 +3,9 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer, persistStore } from 'redux-persist'
 import { orderSlice } from './state/order'
+import { orderInfoSlice } from './state/orderInfo'
 
 import { localInfoSlice } from './state'
-import { orderInfoSlice } from './state/orderInfo'
 
 const persistConfig = {
   key: 'root', // Clave de persistencia

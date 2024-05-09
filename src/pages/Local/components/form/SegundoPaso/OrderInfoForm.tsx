@@ -1,15 +1,7 @@
 import { TextInput, Title } from '@mantine/core'
 
-import { useAppSelector, useForm } from '@/hooks'
-import { DeliveryType, PaymentType, TransferEntity, ZoneEntity } from '@/models'
 
 import classes from '../../../styles/OrderInfoForm.module.css'
-import { GetValidatedOrderInfo } from '@/utils'
-import { useEffect, useState } from 'react'
-import { PaymentTypeRadioButtons } from './PaymentTypeRadioButtons'
-import { DeliveryRadioButtons } from './DeliveryRadioButtons'
-import { ZonesRadioButtons } from './ZonesRadioButtons'
-import { useOrderInfoActions } from '@/pages/Local/hooks'
 
 export interface FormValues {
   name: string
@@ -17,46 +9,46 @@ export interface FormValues {
   comments: string
 }
 
-interface FormValidations {
-  [key: string]: [( value: any ) => boolean, string]
-}
+// interface FormValidations {
+//   [key: string]: [( value: any ) => boolean, string]
+// }
 
-const formData: FormValues = {
-  name: '',
-  phone: '',
-  comments: ''
-}
+// const formData: FormValues = {
+//   name: '',
+//   phone: '',
+//   comments: ''
+// }
 
-const formValidations: FormValidations = {
-  name: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 40, 'El nombre debe tener al menos 3 caracteres y ser menor a 40 caracteres'],
-  phone: [( value: any ) => /^\d{10}$/.test( value ), 'Número de telefono invalido, debería tener 10 dígitos ejemplo: 3815668899'],
-  comments: [( value: any ) => value.trim().length <= 100, 'Comentarios deberían ser menores a 100 caracteres'],
-}
+// const formValidations: FormValidations = {
+//   name: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 40, 'El nombre debe tener al menos 3 caracteres y ser menor a 40 caracteres'],
+//   phone: [( value: any ) => /^\d{10}$/.test( value ), 'Número de telefono invalido, debería tener 10 dígitos ejemplo: 3815668899'],
+//   comments: [( value: any ) => value.trim().length <= 100, 'Comentarios deberían ser menores a 100 caracteres'],
+// }
 
-// --------- DELIVERY FORM
+// // --------- DELIVERY FORM
 
-export interface FormDeliveryValues {
-  address: string
-  addressNumber: string
-}
+// export interface FormDeliveryValues {
+//   address: string
+//   addressNumber: string
+// }
 
-const formDeliveryData: FormDeliveryValues = {
-  address: '',
-  addressNumber: ''
-}
+// const formDeliveryData: FormDeliveryValues = {
+//   address: '',
+//   addressNumber: ''
+// }
 
-const formDeliveryValidations: FormValidations = {
-  address: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 50, 'Dirección debería tener al menos 5 caracteres y ser menor a 50'],
-  addressNumber: [( value: any ) => /^\d{1,6}$/.test( value ), 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres']
-}
+// const formDeliveryValidations: FormValidations = {
+//   address: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 50, 'Dirección debería tener al menos 5 caracteres y ser menor a 50'],
+//   addressNumber: [( value: any ) => /^\d{1,6}$/.test( value ), 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres']
+// }
 
-// Todo: cuando ya se realizo el pedido y se quiere realizar otro, los valores del formulario deberían permanecer (excepto los de los pedidos)
+// // Todo: cuando ya se realizo el pedido y se quiere realizar otro, los valores del formulario deberían permanecer (excepto los de los pedidos)
 
-interface OrderInfoFormProps {
-  setFormValid: ( value: boolean ) => void
-}
+// interface OrderInfoFormProps {
+//   setFormValid: ( value: boolean ) => void
+// }
 
-export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) => {
+export const OrderInfoForm = ( ) => {
   // const { addOrderInfo } = useOrderInfoActions()
   
   // // - STATE VALUES

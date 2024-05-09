@@ -6,7 +6,7 @@ import { WhatsappIcon } from '@/components';
 
 import classes from '../../styles/Recipe.module.css';
 // import { useOrderActions } from '../../hooks';
-import { showNotification } from '@mantine/notifications';
+// import { showNotification } from '@mantine/notifications';
 
 
 export const Recipe = () => {
@@ -14,7 +14,7 @@ export const Recipe = () => {
 
   const [active, setActive] = useState( 0 );
 
-  const [formValid, setFormValid] = useState( false )
+  // const [formValid, setFormValid] = useState( false )
 
   // const orders = useAppSelector( ( state: any ) => state.order.orders )
 
@@ -24,9 +24,9 @@ export const Recipe = () => {
   const nextStep = () =>
     setActive( ( current ) => {
       // Validate Form
-      if ( !formValid ) {
-        return current;
-      }
+      // if ( !formValid ) {
+      //   return current;
+      // }
       return current < 2 ? current + 1 : current;
     } );
 
@@ -35,10 +35,10 @@ export const Recipe = () => {
   const handleContinue = () => {
     // Verify if the orders are valid
     // Validar formulario
-    if ( !formValid ) {
-      showNotification( { title: 'Error en los datos del formulario', message: 'Varifique que los datos hayan sido completados correctamente', color: 'red' } ) 
-      return
-    }
+    // if ( !formValid ) {
+    //   showNotification( { title: 'Error en los datos del formulario', message: 'Varifique que los datos hayan sido completados correctamente', color: 'red' } ) 
+    //   return
+    // }
     nextStep();
   }
 
@@ -65,7 +65,7 @@ export const Recipe = () => {
         </Stepper.Step>
 
         <Stepper.Step display={'flex'} label='Ultimo Paso' description='Realizar pedido'>
-          <OrderInfoForm setFormValid={setFormValid} />
+          <OrderInfoForm />
         </Stepper.Step>
 
         <Stepper.Completed >

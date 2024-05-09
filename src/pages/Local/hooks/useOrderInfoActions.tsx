@@ -7,7 +7,6 @@ export const useOrderInfoActions = () => {
 
   const addOrderInfo = ( orderInfo: OrderInfoDto ) => {
     try {
-      console.log( 'addOrderInfo', orderInfo )
       dispatch( startSavingOrderInfo( orderInfo ) )
       // Almacenarlo en firebase también
     } catch ( error ) {

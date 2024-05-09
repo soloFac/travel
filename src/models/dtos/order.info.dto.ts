@@ -18,8 +18,6 @@ export class OrderInfoDto {
   static create ( orderInfo: OrderInfoEntity ): [ string?, OrderInfoEntity? ] {
     const { name, phone, deliveryType, address, addressNumber, comments, zone, paymentType } = orderInfo
 
-    console.log( 'zone: ', zone )
-
     if ( !validString( name, 3, 40 ) ) {
       return ['name length must be more than 1 and less than 40']
     }
@@ -37,9 +35,6 @@ export class OrderInfoDto {
     }
 
     if ( deliveryType === DeliveryType.DELIVERY ) {
-      
-      console.log( 'ZONE: ', zone )
-
       if ( !address || !addressNumber || !zone ) {
         return ['Delivery address, number and zone are required']
       }

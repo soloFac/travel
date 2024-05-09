@@ -38,19 +38,16 @@ const formValidations: FormValidations = {
 export interface FormDeliveryValues {
   address: string
   addressNumber: string
-  zone: string
 }
 
 const formDeliveryData: FormDeliveryValues = {
   address: '',
-  addressNumber: '',
-  zone: ''
+  addressNumber: ''
 }
 
 const formDeliveryValidations: FormValidations = {
   address: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 50, 'Dirección debería tener al menos 5 caracteres y ser menor a 50'],
   addressNumber: [( value: any ) => /^\d{1,6}$/.test( value ), 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres'],
-  zone: [( value: any ) => value.trim().length === 0, 'Debe seleccionar una zona']
 }
 
 // Todo: cuando ya se realizo el pedido y se quiere realizar otro, los valores del formulario deberían permanecer (excepto los de los pedidos)
@@ -77,9 +74,6 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
   const orderTotal = calculateTotalOrders( orders )
   const [totalOrder, setTotalOrder] = useState( 0 )
   
-  // const [totalOrder, setTotalOrder] = useState( 0 )
-  // const orderTotal = calculateTotalOrders( orders )
-
   const {
     formState: { name, phone, comments },
     formValidation: { nameValid, phoneValid, commentsValid },
@@ -99,6 +93,10 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
   
   useEffect( () => {
     if ( deliveryType === DeliveryType.DELIVERY ) {
+      if ( zone.length === 0 ) {
+        setFormValid( false )
+        return
+      }
       setFormValid( isFormValid() && isFormValidDelivery() )
     } else {
       setFormValid( isFormValid() )
@@ -110,8 +108,9 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
       console.error( orderInfo )
       return
     }
+
     addOrderInfo( orderInfo )
-  }, [nameValid, phoneValid, commentsValid, paymentType, deliveryType, address, zone] )
+  }, [nameValid, phoneValid, commentsValid, paymentType, deliveryType, addressValid, addressNumberValid, zone] )
 
   useEffect( () => {
     if ( deliveryType === DeliveryType.PICKUP ) {

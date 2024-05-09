@@ -3,7 +3,6 @@ import { saveOrderInfo, startSaving } from './orderDataSlice'
 
 export const startSavingOrderInfo = ( orderInfo: OrderInfoDto ) => {
   return async ( dispatch: any ) => {
-    console.log( 'startSavingOrderInfo', orderInfo )
     dispatch( startSaving() )
     try {
       dispatch( saveOrderInfo( { orderInfo } ) )

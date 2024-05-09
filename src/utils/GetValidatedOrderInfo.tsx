@@ -13,9 +13,9 @@ interface GetValidatedOrderInfoProps {
 }
 
 export const GetValidatedOrderInfo = ( values: GetValidatedOrderInfoProps, zones: ZoneEntity[] ): OrderInfoEntity | string => {
-
+  
+  console.log( '------------ HOLA --------------' )
   const { name, phone, comments, paymentType, deliveryType, address, addressNumber, zone } = values;
-  console.log( 'zone: ', zone )
 
   const zoneSelected: ZoneEntity | undefined = ( zones.length > 0 ) ? zones.find( ( z: ZoneEntity ) => getPlainString( z.name ) === zone ) : undefined;
 

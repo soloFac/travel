@@ -4,9 +4,8 @@ import storage from 'redux-persist/lib/storage'
 import { persistReducer, persistStore } from 'redux-persist'
 
 import { orderSlice } from './state/order'
-import { orderInfoSlice } from './state/orderInfo'
 
-import { localInfoSlice } from './state'
+import { localInfoSlice, orderInfoSlice } from './state'
 
 const persistConfig = {
   key: 'root', // Clave de persistencia

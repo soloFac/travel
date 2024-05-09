@@ -15,6 +15,7 @@ const DEFAULT_STATE: OrderDataState = {
 
 // const initialState: OrderDataState = getPersistedStateLocalStorage( 'orderInfo', DEFAULT_STATE )
 
+// - Tal vez el nombre orderDetails sería más adecuado
 export const orderDataSlice = createSlice( {
   name: 'orderinfo',
   initialState: DEFAULT_STATE,

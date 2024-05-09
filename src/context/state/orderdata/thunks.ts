@@ -1,5 +1,5 @@
 import { OrderInfoDto } from '@/models'
-import { saveOrderInfo, startSaving } from './orderInfoSlice'
+import { saveOrderInfo, startSaving } from './orderDataSlice'
 
 export const startSavingOrderInfo = ( orderInfo: OrderInfoDto ) => {
   return async ( dispatch: any ) => {

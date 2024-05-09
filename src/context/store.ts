@@ -3,9 +3,8 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer, persistStore } from 'redux-persist'
 
-import { orderSlice } from './state/order'
 
-import { localInfoSlice, orderInfoSlice } from './state'
+import { localInfoSlice, orderDataSlice, orderSlice } from './state'
 
 const persistConfig = {
   key: 'root', // Clave de persistencia
@@ -18,7 +17,7 @@ const persistConfig = {
 const rootReducer = combineReducers( {
   order: orderSlice.reducer,
   localInfo: localInfoSlice.reducer,
-  orderInfo: orderInfoSlice.reducer,
+  orderInfo: orderDataSlice.reducer,
   // vocabulary: listSlice.reducer
 } )
 

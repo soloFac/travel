@@ -1,3 +1,3 @@
 export * from './order'
-export * from './orderInfo'
+export * from './orderdata'
 export * from './localInfo'

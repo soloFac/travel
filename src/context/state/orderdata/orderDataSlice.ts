@@ -1,21 +1,21 @@
 import { OrderInfoEntity } from '@/models'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export interface OrderInfoState {
+export interface OrderDataState {
   orderInfo: OrderInfoEntity | null
   loading: boolean
   error: any
 }
 
-const DEFAULT_STATE: OrderInfoState = {
+const DEFAULT_STATE: OrderDataState = {
   orderInfo: null,
   loading: false,
   error: null,
 }
 
-// const initialState: OrderInfoState = getPersistedStateLocalStorage( 'orderInfo', DEFAULT_STATE )
+// const initialState: OrderDataState = getPersistedStateLocalStorage( 'orderInfo', DEFAULT_STATE )
 
-export const orderInfoSlice = createSlice( {
+export const orderDataSlice = createSlice( {
   name: 'orderinfo',
   initialState: DEFAULT_STATE,
   reducers: {
@@ -33,8 +33,8 @@ export const orderInfoSlice = createSlice( {
   },
 } )
 
-export const { startSaving, saveOrderInfo, fetchOrderInfoError } = orderInfoSlice.actions
+export const { startSaving, saveOrderInfo, fetchOrderInfoError } = orderDataSlice.actions
 
 export const selectOrderInfo = ( state: any ) => state.orderInfo
 
-export default orderInfoSlice.reducer
+export default orderDataSlice.reducer

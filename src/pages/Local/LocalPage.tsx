@@ -9,12 +9,13 @@ import { useAppSelector } from '@/hooks';
 
 import classes from './styles/LocalPage.module.css';
 import { useParams } from 'react-router-dom';
-import { useLocalInfoActions } from './hooks';
+import { useLocalInfoActions, useOrderActions } from './hooks';
 import { useEffect } from 'react';
 
 export const LocalPage = () => {
   // set local to useState
   const { local } = useAppSelector( state => state.localInfo )
+  const { deleteOrders } = useOrderActions()
 
   const [openedCart, { open: openCart, close: closeCart }] = useDisclosure( false );
 
@@ -23,7 +24,14 @@ export const LocalPage = () => {
   const { getLocal } = useLocalInfoActions()
 
   useEffect( () => {
-    if ( localName ) { getLocal( localName ) }
+    if ( localName ) { 
+      const name = localStorage.getItem( 'lastLocalSelected' )
+      if ( name !== localName ) {
+        deleteOrders()
+      }
+      getLocal( localName )
+      localStorage.setItem( 'lastLocalSelected', localName )
+    }
   }
   , [localName] )
 

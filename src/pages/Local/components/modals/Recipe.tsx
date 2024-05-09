@@ -12,12 +12,14 @@ import { useAppSelector } from '@/hooks';
 import { getWhatsappMessage } from '@/utils';
 import { OrderInfoDto } from '@/models';
 import encodeUrl from 'encodeurl';
-
+import { useOrderActions } from '../../hooks';
 
 export const Recipe = () => {
   const { orderInfo } = useAppSelector( ( state: any ) => state.orderInfo )
   const { orders } = useAppSelector( ( state: any ) => state.order )
   const { local } = useAppSelector( ( state: any ) => state.localInfo )
+
+  const { deleteOrders } = useOrderActions()
 
   const [showCart, setShowCart] = useState( true )
   const [showOrderInfo, setShowOrderInfo] = useState( false )
@@ -61,7 +63,6 @@ export const Recipe = () => {
 
 
   const handleSendOrder = () => {
-    // const orderInfo: OrderInfoEntity | string = GetValidatedOrderInfo( form.getValues(), zones )
     console.log( 'orderInfo', orderInfo )
     if ( typeof orderInfo === 'string' ) {
       showNotification( { title: 'Error', message: orderInfo, color: 'red' } )
@@ -72,10 +73,8 @@ export const Recipe = () => {
     const encodedMessage = encodeUrl( message )
     window.open( `https://api.whatsapp.com/send/?phone=${ local.whatsapp }&text=${ encodedMessage }`, '_blank' )
 
-    // deleteOrders()
+    deleteOrders()
   }
-
-  
 
   return (
     <div className={classes.receipe_container}>
@@ -93,25 +92,6 @@ export const Recipe = () => {
           <p>Serás redireccionado a Whatsapp para finalizar tu pedido.</p>
         </div>
       </ShowHideComponent>
-
-     
-
-      {/* <Stepper active={active} color='red' iconSize={32}>
-        <Stepper.Step label='Primer Paso'  description='Confirmar Pedido'>
-          <OrderCart handleContinue={nextStep} />
-        </Stepper.Step>
-
-        <Stepper.Step display={'flex'} label='Ultimo Paso' description='Realizar pedido'>
-          <OrderInfoForm setFormValid={setFormValid} />
-        </Stepper.Step>
-
-        <Stepper.Completed >
-          <div className={classes.step_completed_container}>
-            <WhatsappIcon size={35} extraClasses={classes.step_whatsapp_icon}/>
-            <p>Serás redireccionado a Whatsapp para finalizar tu pedido.</p>
-          </div>
-        </Stepper.Completed>
-      </Stepper> */}
 
       <Group justify='flex-end' mt='xl'>
         <div className={classes.btn_step_container}>

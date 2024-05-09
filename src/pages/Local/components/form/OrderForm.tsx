@@ -5,7 +5,7 @@ import { showNotification } from '@mantine/notifications';
 
 import { CheckBoxButtons, ImageMenu, SectionComponent, Remember } from '@/components';
 import { Extra, MenuEntity, OrderEntity } from '@/models';
-import { useCounter } from '@/hooks';
+import { useAppSelector, useCounter } from '@/hooks';
 import { AmountCounter } from '../AmountCounter';
 
 import { CheckBoxExtraButtons } from '../CheckBoxExtraButtons';
@@ -14,6 +14,10 @@ import { useOrderActions } from '../../hooks';
 
 import classes from '../../styles/OrderForm.module.css'
 import { VariantsRadioButtons } from '../VariantsRadioButtons';
+import { GetVariantSelected } from '@/utils/GetVariantSelected';
+import { GetExtrasSelected } from '@/utils/GetExtrasSelected';
+import { GetCategorySelected } from '@/utils/GetCategorySelected';
+import { CalculateTotalOrder } from '@/utils/CalculateTotalOrder';
 
 interface OrderFormProps {
   menu: MenuEntity
@@ -24,6 +28,8 @@ interface OrderFormProps {
 
 export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras, closeModal } ) => {
   const { name: menuName, image, variants } = menu
+
+  const { local } = useAppSelector( state => state.localInfo )
 
   const { addMenu } = useOrderActions()
 
@@ -43,8 +49,20 @@ export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras, 
   useEffect( () => {
     if ( typeof orderValidated === 'object' ) {
       setOrder( orderValidated )
-      setTotal( orderValidated.total )
     }
+    const variantSelected = GetVariantSelected( menu, variant )
+    if ( typeof variantSelected === 'string' ) { return }
+    if ( local ) {
+      const categorySelected = GetCategorySelected( menu.category, local?.categories )
+      if ( typeof categorySelected === 'string' ) {
+        showNotification( { title: 'Error al seleccionar la categoría', message: categorySelected, color: 'red' } )
+        return
+      }
+      const extrasSelected = GetExtrasSelected( extrasCheckbox, categorySelected )
+      setTotal( CalculateTotalOrder( variantSelected, extrasSelected, amount ) )
+    }
+
+    // setTotal( orderValidated.total )
   }, [variant, extrasCheckbox, dressingsCheckbox, amount] )
 
   const handleSubmit = ( event: React.FormEvent<HTMLFormElement> ) => {

@@ -4,7 +4,7 @@ import { useAppSelector, useForm } from '@/hooks'
 import { DeliveryType, PaymentType, TransferEntity, ZoneEntity } from '@/models'
 
 import classes from '../../../styles/OrderInfoForm.module.css'
-import { GetValidatedOrderInfo } from '@/utils'
+import { calculateTotalOrders, getPlainString, GetValidatedOrderInfo } from '@/utils'
 import { useEffect, useState } from 'react'
 import { PaymentTypeRadioButtons } from './PaymentTypeRadioButtons'
 import { DeliveryRadioButtons } from './DeliveryRadioButtons'
@@ -38,16 +38,19 @@ const formValidations: FormValidations = {
 export interface FormDeliveryValues {
   address: string
   addressNumber: string
+  zone: string
 }
 
 const formDeliveryData: FormDeliveryValues = {
   address: '',
-  addressNumber: ''
+  addressNumber: '',
+  zone: ''
 }
 
 const formDeliveryValidations: FormValidations = {
   address: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 50, 'Dirección debería tener al menos 5 caracteres y ser menor a 50'],
-  addressNumber: [( value: any ) => /^\d{1,6}$/.test( value ), 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres']
+  addressNumber: [( value: any ) => /^\d{1,6}$/.test( value ), 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres'],
+  zone: [( value: any ) => value.trim().length === 0, 'Debe seleccionar una zona']
 }
 
 // Todo: cuando ya se realizo el pedido y se quiere realizar otro, los valores del formulario deberían permanecer (excepto los de los pedidos)
@@ -58,6 +61,8 @@ interface OrderInfoFormProps {
 
 export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) => {
   const { addOrderInfo } = useOrderInfoActions()
+
+  const { orders } = useAppSelector( ( state: any ) => state.order )
   
   // - STATE VALUES
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
@@ -66,7 +71,11 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
 
   const [paymentType, setPaymentType] = useState( PaymentType.CASH )
   const [deliveryType, setDeliveryType] = useState( DeliveryType.PICKUP )
+
   const [zone, setZone] = useState( '' )
+
+  const orderTotal = calculateTotalOrders( orders )
+  const [totalOrder, setTotalOrder] = useState( 0 )
   
   // const [totalOrder, setTotalOrder] = useState( 0 )
   // const orderTotal = calculateTotalOrders( orders )
@@ -87,13 +96,9 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
     isFormValid: isFormValidDelivery
   } = useForm( formDeliveryData, formDeliveryValidations )
 
-  console.log( name, phone, comments, paymentType, deliveryType, zone )
-  // console.log( 'isFormValid: ', isFormValid )
-  console.log( nameValid, phoneValid, commentsValid )
   
   useEffect( () => {
     if ( deliveryType === DeliveryType.DELIVERY ) {
-      console.log( 'es delivery' )
       setFormValid( isFormValid() && isFormValidDelivery() )
     } else {
       setFormValid( isFormValid() )
@@ -107,7 +112,18 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
     }
     addOrderInfo( orderInfo )
   }, [nameValid, phoneValid, commentsValid, paymentType, deliveryType, address, zone] )
-  
+
+  useEffect( () => {
+    if ( deliveryType === DeliveryType.PICKUP ) {
+      setTotalOrder( orderTotal )
+      setZone( '' )
+    } else {
+      const zonePrice = zones.find( ( _zone ) => getPlainString( _zone.name ) === getPlainString( zone ) )?.price
+      if ( !zonePrice ) return
+      setTotalOrder( orderTotal + zonePrice )
+    }    
+  }, [zone, deliveryType] )
+
   return (
     <div className={classes.last_step_container}>
       <Title className={classes.title}>Realizar Pedido</Title>
@@ -202,7 +218,7 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
 
       <div className={classes.total_container}>
         <Title className={classes.total_title}>Total:</Title>
-        {/* <p className={classes.total_value}>${totalOrder}</p> */}
+        <p className={classes.total_value}>${totalOrder}</p>
       </div>
     </div>
   )

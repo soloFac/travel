@@ -5,7 +5,8 @@ import { persistReducer, persistStore } from 'redux-persist'
 
 import { orderSlice } from './state/order'
 
-import { localInfoSlice, orderInfoSlice } from './state'
+import { localInfoSlice } from './state'
+import { orderInfoSlice } from './state/orderInfo/orderInfoSlice'
 
 const persistConfig = {
   key: 'root', // Clave de persistencia

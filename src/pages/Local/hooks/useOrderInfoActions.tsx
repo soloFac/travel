@@ -1,4 +1,4 @@
-import { startSavingOrderInfo } from '@/context'
+import { startSavingOrderInfo } from '@/context/state/orderInfo/thunks'
 import { useAppDispatch } from '@/hooks'
 import { OrderInfoDto } from '@/models'
 

@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react';
-import { Stepper, Button, Group } from '@mantine/core';
+import { useState } from 'react';
+import { Button, Group } from '@mantine/core';
 
 import { OrderInfoForm } from '@/pages/Local/components';
-import { ShowHideComponent, Togglable, WhatsappIcon } from '@/components';
+import { ShowHideComponent, WhatsappIcon } from '@/components';
 
 import classes from '../../styles/Recipe.module.css';
 // import { useOrderActions } from '../../hooks';
 import { showNotification } from '@mantine/notifications';
-import { ModalMantine } from '../../../../components/ModalMantine';
-import { useDisclosure } from '@mantine/hooks';
 import { OrderCart } from '../form/PrimerPaso';
-import { OrderInfoEntity } from '@/models';
-import { GetValidatedOrderInfo } from '@/utils';
 
 
 export const Recipe = () => {

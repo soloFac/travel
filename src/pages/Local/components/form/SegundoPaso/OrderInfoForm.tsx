@@ -1,10 +1,10 @@
 import { TextInput, Title } from '@mantine/core'
 
 import { useAppSelector, useForm } from '@/hooks'
-import { DeliveryType, OrderEntity, PaymentType, TransferEntity, ZoneEntity } from '@/models'
+import { DeliveryType, PaymentType, TransferEntity, ZoneEntity } from '@/models'
 
 import classes from '../../../styles/OrderInfoForm.module.css'
-import { calculateTotalOrders, GetValidatedOrderInfo } from '@/utils'
+import { GetValidatedOrderInfo } from '@/utils'
 import { useEffect, useState } from 'react'
 import { PaymentTypeRadioButtons } from './PaymentTypeRadioButtons'
 import { DeliveryRadioButtons } from './DeliveryRadioButtons'
@@ -61,7 +61,7 @@ export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) 
   
   // - STATE VALUES
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
-  const orders: OrderEntity[] = useAppSelector( ( state: any ) => state.order.orders )
+  // const orders: OrderEntity[] = useAppSelector( ( state: any ) => state.order.orders )
   const transfer: TransferEntity = useAppSelector( ( state: any ) => state.localInfo.local.transfer )
 
   const [paymentType, setPaymentType] = useState( PaymentType.CASH )

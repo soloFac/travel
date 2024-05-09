@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type ValidationFunction = ( value: any ) => boolean; // replace `any` with the actual type of your form values
 type FormValidations = {
@@ -23,13 +23,13 @@ export const useForm = (
     setFormState( initialForm )
   }, [initialForm] )
 
-  const isFormValid = useMemo( () => {
+  const isFormValid = () => {
     for ( const formValue of Object.keys( formValidation ) ) {
       if ( formValidation[formValue] !== null ) return false
     }
 
     return true
-  }, [formValidation] )
+  }
 
   const onInputChange = ( { target }: any ) => {
     const { name, value } = target
@@ -44,12 +44,11 @@ export const useForm = (
   }
 
   const createValidators = () => {
-    const formCheckedValues = {}
+    const formCheckedValues: { [key: string]: string | null } = {}
 
     for ( const formField of Object.keys( formValidations ) ) {
       const [fn, errorMessage] = formValidations[formField]
 
-      const formCheckedValues: { [key: string]: string | null } = {};
       formCheckedValues[`${ formField }Valid`] = fn( formState[formField] ) ? null : errorMessage
     }
 
@@ -61,7 +60,7 @@ export const useForm = (
     formState,
     onInputChange,
     onResetForm,
-    ...formValidation,
+    formValidation,
     isFormValid
   }
 }

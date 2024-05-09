@@ -1,23 +1,23 @@
-import { FormValues } from '@/components'
 import { useAppSelector } from '@/hooks'
 import { ZoneEntity } from '@/models'
 import { Group, Radio } from '@mantine/core'
-import { UseFormReturnType } from '@mantine/form'
 import { showNotification } from '@mantine/notifications'
 
 import classes from '../../../styles/form/SegundoPaso/ZonesRadioButtons.module.css'
+import { getPlainString } from '@/utils'
 
 interface ZonesRadioButtonsProps {
-  form: UseFormReturnType<FormValues>
+  zone: string
+  setZone: any
 }
 
-export const ZonesRadioButtons: React.FC<ZonesRadioButtonsProps> = ( { form } ) => {
+export const ZonesRadioButtons: React.FC<ZonesRadioButtonsProps> = ( { zone, setZone } ) => {
   const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
 
-  const setZone = ( value: string ) => {
+  const handleSetZone = ( value: string ) => {
     const zoneSelected = zones.find( ( zone: ZoneEntity ) => zone.name === value )
     if ( !zoneSelected ) return
-    form.setFieldValue( 'zone', zoneSelected.name )
+    setZone( getPlainString( zoneSelected.name ) )
 
     showNotification( { 
       title: `Zona de envio ${ zoneSelected.name }: `, message: ` ${ zoneSelected.addresses[0] } - ${ zoneSelected.addresses[1] } - ${ zoneSelected.addresses[2] } - ${ zoneSelected.addresses[3] }`,
@@ -33,9 +33,9 @@ export const ZonesRadioButtons: React.FC<ZonesRadioButtonsProps> = ( { form } ) 
   return (
     <Radio.Group
       label='Zona de envio:'
-      onChange={( value ) => setZone( value )}
+      onChange={( value ) => handleSetZone( value )}
       className={classes.radio_group}
-      defaultValue={form.getValues().zone}
+      defaultValue={zone}
       withAsterisk
       required
     >

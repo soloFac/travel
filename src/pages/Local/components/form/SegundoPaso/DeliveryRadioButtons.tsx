@@ -1,22 +1,22 @@
 import { DeliveryType } from '@/models'
 import { Capitalize, GetEnumValues } from '@/utils'
 import { Group, Radio } from '@mantine/core'
-import { UseFormReturnType } from '@mantine/form'
-import { FormValues } from '../../modals/Recipe'
 
 import classes from '../../../styles/form/SegundoPaso/DeliveryRadioButtons.module.css'
 
 interface DeliveryRadioButtonsProps {
-  form: UseFormReturnType<FormValues>
+  deliveryType: DeliveryType
+  setDeliveryType: any
 }
 
-export const DeliveryRadioButtons: React.FC<DeliveryRadioButtonsProps> = ( { form } ) => {
+export const DeliveryRadioButtons: React.FC<DeliveryRadioButtonsProps> = ( { deliveryType, setDeliveryType } ) => {
   return (
     <Radio.Group
       label='Tipo de entrega:'
-      onChange={( value ) => form.setFieldValue( 'deliveryType', value as DeliveryType )}
+      onChange={( value ) => setDeliveryType( value )}
       className={classes.radio_group}
-      defaultValue={form.getValues().deliveryType}
+      defaultValue={deliveryType}
+      name='deliveryType'
       withAsterisk
       required
     >

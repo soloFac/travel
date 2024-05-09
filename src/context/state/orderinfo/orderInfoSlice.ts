@@ -1,4 +1,3 @@
-import { getPersistedStateLocalStorage } from '@/hooks'
 import { OrderInfoEntity } from '@/models'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
@@ -14,7 +13,7 @@ const DEFAULT_STATE: OrderInfoState = {
   error: null,
 }
 
-const initialState: OrderInfoState = getPersistedStateLocalStorage( 'orderInfo', DEFAULT_STATE )
+// const initialState: OrderInfoState = getPersistedStateLocalStorage( 'orderInfo', DEFAULT_STATE )
 
 export const orderInfoSlice = createSlice( {
   name: 'orderinfo',

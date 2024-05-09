@@ -35,34 +35,17 @@ export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras, 
   const [total, setTotal] = useState( 0 )
 
   const { counter: amount, increment, decrement } = useCounter( 1 )
-  
-  // const extrasAddapted = extras?.map( ( { name, price } ) => ( 
-  //   <>{ name } <span>${ price }</span></>
-  // ) )
-
-  // const form = useForm( {
-  //   clearInputErrorOnChange: false,
-
-  //   initialValues: { variant: '', dressing: [], extras: [], amount },
-
-  //   // functions will be used to validate values at corresponding key
-  //   validate: {
-  //     variant: ( value: string ) => ( !value ? 'Select a variant' : null ),
-  //     amount: ( value: number ) => ( value < 1 ? 'Select a valid amount' : null ),
-  //   },
-  // } );
-
 
   // Utilizar un useEffect para que cuando cambien las variables del formulario se actualice se realice la validacion de los datos
   
   const orderValidated = GetValidatedOrder( menu, menuName, variant, dressingsCheckbox, extrasCheckbox, amount )
 
   useEffect( () => {
-    setOrder( orderValidated )
     if ( typeof orderValidated === 'object' ) {
+      setOrder( orderValidated )
       setTotal( orderValidated.total )
     }
-  }, [variant, dressingsCheckbox, extrasCheckbox, amount] )
+  }, [variant, extrasCheckbox, dressingsCheckbox, amount] )
 
   const handleSubmit = ( event: React.FormEvent<HTMLFormElement> ) => {
     event.preventDefault();
@@ -75,7 +58,7 @@ export const OrderForm: React.FC<OrderFormProps> = ( { menu, dressings, extras, 
     addMenu( order )
     showNotification( {
       title: 'Pedido agregado correctamente',
-      message: 'Puedes ver arriba a la izquierda el carrito de pedido 🤥',
+      message: 'Puedes ver arriba a la izquierda el carrito de pedido con el total de tu compra',
     } )
     // close modal
     closeModal()

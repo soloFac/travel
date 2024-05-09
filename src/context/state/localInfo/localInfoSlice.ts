@@ -36,6 +36,6 @@ export const localInfoSlice = createSlice( {
 
 export const { fetchLocalInfo, fetchLocalInfoSuccess, fetchLocalError } = localInfoSlice.actions
 
-export const selectLocal = ( state: any ) => state.local
+export const selectLocalInfo = ( state: any ) => state.local
 
 export default localInfoSlice.reducer

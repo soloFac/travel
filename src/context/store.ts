@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 // import { authSlice, listSlice } from './states'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer, persistStore } from 'redux-persist'
+
 import { orderSlice } from './state/order'
 import { orderInfoSlice } from './state/orderInfo'
 

@@ -20,7 +20,7 @@ export interface FormValues {
 interface FormValidations {
   [key: string]: [( value: any ) => boolean, string]
 }
-
+ 
 const formData: FormValues = {
   name: '',
   phone: '',

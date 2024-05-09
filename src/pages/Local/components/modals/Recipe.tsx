@@ -8,9 +8,17 @@ import classes from '../../styles/Recipe.module.css';
 // import { useOrderActions } from '../../hooks';
 import { showNotification } from '@mantine/notifications';
 import { OrderCart } from '../form/PrimerPaso';
+import { useAppSelector } from '@/hooks';
+import { getWhatsappMessage } from '@/utils';
+import { OrderInfoDto } from '@/models';
+import encodeUrl from 'encodeurl';
 
 
 export const Recipe = () => {
+  const { orderInfo } = useAppSelector( ( state: any ) => state.orderInfo )
+  const { orders } = useAppSelector( ( state: any ) => state.order )
+  const { local } = useAppSelector( ( state: any ) => state.localInfo )
+
   const [showCart, setShowCart] = useState( true )
   const [showOrderInfo, setShowOrderInfo] = useState( false )
   const [showFinalStep, setShowFinalStep] = useState( false )
@@ -54,14 +62,15 @@ export const Recipe = () => {
 
   const handleSendOrder = () => {
     // const orderInfo: OrderInfoEntity | string = GetValidatedOrderInfo( form.getValues(), zones )
-    // if ( typeof orderInfo === 'string' ) {
-    //   showNotification( { title: 'Error', message: orderInfo, color: 'red' } )
-    //   return
-    // }
+    console.log( 'orderInfo', orderInfo )
+    if ( typeof orderInfo === 'string' ) {
+      showNotification( { title: 'Error', message: orderInfo, color: 'red' } )
+      return
+    }
 
-    // const message = getWhatsappMessage( orders, orderInfo as OrderInfoDto )
-    // const encodedMessage = encodeUrl( message )
-    // window.open( `https://api.whatsapp.com/send/?phone=${ local.whatsapp }&text=${ encodedMessage }`, '_blank' )
+    const message = getWhatsappMessage( orders, orderInfo as OrderInfoDto )
+    const encodedMessage = encodeUrl( message )
+    window.open( `https://api.whatsapp.com/send/?phone=${ local.whatsapp }&text=${ encodedMessage }`, '_blank' )
 
     // deleteOrders()
   }

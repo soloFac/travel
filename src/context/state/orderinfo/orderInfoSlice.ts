@@ -2,18 +2,19 @@ import { getPersistedStateLocalStorage } from '@/hooks'
 import { OrderInfoEntity } from '@/models'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export interface OrderState {
-  orderinfo: OrderInfoEntity
-  loading?: boolean
-  error?: any
+export interface OrderInfoState {
+  orderInfo: OrderInfoEntity | null
+  loading: boolean
+  error: any
 }
 
-const DEFAULT_STATE: OrderState = {
-  orderinfo: {} as OrderInfoEntity,
+const DEFAULT_STATE: OrderInfoState = {
+  orderInfo: null,
+  loading: false,
+  error: null,
 }
 
-const initialState: OrderState = getPersistedStateLocalStorage( 'orderinfo', DEFAULT_STATE )
-
+const initialState: OrderInfoState = getPersistedStateLocalStorage( 'orderInfo', DEFAULT_STATE )
 
 export const orderInfoSlice = createSlice( {
   name: 'orderinfo',
@@ -23,7 +24,7 @@ export const orderInfoSlice = createSlice( {
       state.loading = true
     },
     saveOrderInfo: ( state, action: PayloadAction<{orderInfo: OrderInfoEntity}> ) => {
-      state.orderinfo = action.payload.orderInfo
+      state.orderInfo = action.payload.orderInfo
       state.loading = false
     },
     fetchOrderInfoError: ( state, action ) => {
@@ -35,6 +36,6 @@ export const orderInfoSlice = createSlice( {
 
 export const { startSaving, saveOrderInfo, fetchOrderInfoError } = orderInfoSlice.actions
 
-export const selectLocal = ( state: any ) => state.orderinfo
+export const selectOrderInfo = ( state: any ) => state.orderInfo
 
 export default orderInfoSlice.reducer

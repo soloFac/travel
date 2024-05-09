@@ -2,11 +2,10 @@ import { useDisclosure } from '@mantine/hooks';
 import { ActionIcon } from '@mantine/core';
 
 import { Cart, HeaderMegaMenu, ModalMantine } from '@/components'
-import { LocalCard } from './components';
+import { LocalCard, Recipe } from './components';
 import { Badges } from '@/components/ui/Badges';
 import { MenusCategoryCards } from './components/MenusCategoryCards';
 import { useAppSelector } from '@/hooks';
-import { Recipe } from '@/components';
 
 import classes from './styles/LocalPage.module.css';
 import { useParams } from 'react-router-dom';

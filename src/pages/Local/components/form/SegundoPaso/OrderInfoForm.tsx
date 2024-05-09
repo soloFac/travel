@@ -1,7 +1,15 @@
 import { TextInput, Title } from '@mantine/core'
 
+import { useAppSelector, useForm } from '@/hooks'
+import { DeliveryType, OrderEntity, PaymentType, TransferEntity, ZoneEntity } from '@/models'
 
 import classes from '../../../styles/OrderInfoForm.module.css'
+import { calculateTotalOrders, GetValidatedOrderInfo } from '@/utils'
+import { useEffect, useState } from 'react'
+import { PaymentTypeRadioButtons } from './PaymentTypeRadioButtons'
+import { DeliveryRadioButtons } from './DeliveryRadioButtons'
+import { ZonesRadioButtons } from './ZonesRadioButtons'
+import { useOrderInfoActions } from '@/pages/Local/hooks'
 
 export interface FormValues {
   name: string
@@ -9,96 +17,96 @@ export interface FormValues {
   comments: string
 }
 
-// interface FormValidations {
-//   [key: string]: [( value: any ) => boolean, string]
-// }
+interface FormValidations {
+  [key: string]: [( value: any ) => boolean, string]
+}
 
-// const formData: FormValues = {
-//   name: '',
-//   phone: '',
-//   comments: ''
-// }
+const formData: FormValues = {
+  name: '',
+  phone: '',
+  comments: ''
+}
 
-// const formValidations: FormValidations = {
-//   name: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 40, 'El nombre debe tener al menos 3 caracteres y ser menor a 40 caracteres'],
-//   phone: [( value: any ) => /^\d{10}$/.test( value ), 'Número de telefono invalido, debería tener 10 dígitos ejemplo: 3815668899'],
-//   comments: [( value: any ) => value.trim().length <= 100, 'Comentarios deberían ser menores a 100 caracteres'],
-// }
+const formValidations: FormValidations = {
+  name: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 40, 'El nombre debe tener al menos 3 caracteres y ser menor a 40 caracteres'],
+  phone: [( value: any ) => /^\d{10}$/.test( value ), 'Número de telefono invalido, debería tener 10 dígitos ejemplo: 3815668899'],
+  comments: [( value: any ) => value.trim().length <= 100, 'Comentarios deberían ser menores a 100 caracteres'],
+}
 
-// // --------- DELIVERY FORM
+// --------- DELIVERY FORM
 
-// export interface FormDeliveryValues {
-//   address: string
-//   addressNumber: string
-// }
+export interface FormDeliveryValues {
+  address: string
+  addressNumber: string
+}
 
-// const formDeliveryData: FormDeliveryValues = {
-//   address: '',
-//   addressNumber: ''
-// }
+const formDeliveryData: FormDeliveryValues = {
+  address: '',
+  addressNumber: ''
+}
 
-// const formDeliveryValidations: FormValidations = {
-//   address: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 50, 'Dirección debería tener al menos 5 caracteres y ser menor a 50'],
-//   addressNumber: [( value: any ) => /^\d{1,6}$/.test( value ), 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres']
-// }
+const formDeliveryValidations: FormValidations = {
+  address: [( value: any ) => value.trim().length >= 3 && value.trim().length <= 50, 'Dirección debería tener al menos 5 caracteres y ser menor a 50'],
+  addressNumber: [( value: any ) => /^\d{1,6}$/.test( value ), 'Número de dirección puede contener solo números y debería ser menor a 6 caracteres']
+}
 
-// // Todo: cuando ya se realizo el pedido y se quiere realizar otro, los valores del formulario deberían permanecer (excepto los de los pedidos)
+// Todo: cuando ya se realizo el pedido y se quiere realizar otro, los valores del formulario deberían permanecer (excepto los de los pedidos)
 
-// interface OrderInfoFormProps {
-//   setFormValid: ( value: boolean ) => void
-// }
+interface OrderInfoFormProps {
+  setFormValid: ( value: boolean ) => void
+}
 
-export const OrderInfoForm = ( ) => {
-  // const { addOrderInfo } = useOrderInfoActions()
+export const OrderInfoForm: React.FC<OrderInfoFormProps> = ( { setFormValid } ) => {
+  const { addOrderInfo } = useOrderInfoActions()
   
-  // // - STATE VALUES
-  // const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
-  // // const orders: OrderEntity[] = useAppSelector( ( state: any ) => state.order.orders )
-  // const transfer: TransferEntity = useAppSelector( ( state: any ) => state.localInfo.local.transfer )
+  // - STATE VALUES
+  const zones: ZoneEntity[] = useAppSelector( ( state: any ) => state.localInfo.local.zones )
+  const orders: OrderEntity[] = useAppSelector( ( state: any ) => state.order.orders )
+  const transfer: TransferEntity = useAppSelector( ( state: any ) => state.localInfo.local.transfer )
 
-  // const [paymentType, setPaymentType] = useState( PaymentType.CASH )
-  // const [deliveryType, setDeliveryType] = useState( DeliveryType.PICKUP )
-  // const [zone, setZone] = useState( '' )
+  const [paymentType, setPaymentType] = useState( PaymentType.CASH )
+  const [deliveryType, setDeliveryType] = useState( DeliveryType.PICKUP )
+  const [zone, setZone] = useState( '' )
   
-  // // const [totalOrder, setTotalOrder] = useState( 0 )
-  // // const orderTotal = calculateTotalOrders( orders )
+  // const [totalOrder, setTotalOrder] = useState( 0 )
+  // const orderTotal = calculateTotalOrders( orders )
 
-  // const {
-  //   formState: { name, phone, comments },
-  //   formValidation: { nameValid, phoneValid, commentsValid },
-  //   onInputChange,
-  //   // errors
-  //   isFormValid
-  // } = useForm( formData, formValidations )
+  const {
+    formState: { name, phone, comments },
+    formValidation: { nameValid, phoneValid, commentsValid },
+    onInputChange,
+    // errors
+    isFormValid
+  } = useForm( formData, formValidations )
 
-  // const {
-  //   formState: { address, addressNumber },
-  //   formValidation: { addressValid, addressNumberValid },
-  //   // errors
-  //   onInputChange: onInputChangeDelivery,
-  //   isFormValid: isFormValidDelivery
-  // } = useForm( formDeliveryData, formDeliveryValidations )
+  const {
+    formState: { address, addressNumber },
+    formValidation: { addressValid, addressNumberValid },
+    // errors
+    onInputChange: onInputChangeDelivery,
+    isFormValid: isFormValidDelivery
+  } = useForm( formDeliveryData, formDeliveryValidations )
 
-  // console.log( name, phone, comments, paymentType, deliveryType, zone )
-  // // console.log( 'isFormValid: ', isFormValid )
-  // console.log( nameValid, phoneValid, commentsValid )
+  console.log( name, phone, comments, paymentType, deliveryType, zone )
+  // console.log( 'isFormValid: ', isFormValid )
+  console.log( nameValid, phoneValid, commentsValid )
   
-  // useEffect( () => {
-  //   if ( deliveryType === DeliveryType.DELIVERY ) {
-  //     console.log( 'es delivery' )
-  //     setFormValid( isFormValid() && isFormValidDelivery() )
-  //   } else {
-  //     setFormValid( isFormValid() )
-  //   }
+  useEffect( () => {
+    if ( deliveryType === DeliveryType.DELIVERY ) {
+      console.log( 'es delivery' )
+      setFormValid( isFormValid() && isFormValidDelivery() )
+    } else {
+      setFormValid( isFormValid() )
+    }
 
-  //   // setInfoState
-  //   const orderInfo = GetValidatedOrderInfo( { name, phone, comments, paymentType, deliveryType, address, addressNumber, zone }, zones )
-  //   if ( typeof orderInfo === 'string' ) {
-  //     console.error( orderInfo )
-  //     return
-  //   }
-  //   addOrderInfo( orderInfo )
-  // }, [nameValid, phoneValid, commentsValid, paymentType, deliveryType, address, zone] )
+    // setInfoState
+    const orderInfo = GetValidatedOrderInfo( { name, phone, comments, paymentType, deliveryType, address, addressNumber, zone }, zones )
+    if ( typeof orderInfo === 'string' ) {
+      console.error( orderInfo )
+      return
+    }
+    addOrderInfo( orderInfo )
+  }, [nameValid, phoneValid, commentsValid, paymentType, deliveryType, address, zone] )
   
   return (
     <div className={classes.last_step_container}>
@@ -110,9 +118,9 @@ export const OrderInfoForm = ( ) => {
           placeholder='Ej: Juan Perez'
           className={`${ classes.input } ${ classes.name }`}
           name='name'
-          // error={nameValid}
-          // value={name}
-          // onChange={onInputChange}
+          error={nameValid}
+          value={name}
+          onChange={onInputChange}
           required
         />
         <TextInput
@@ -121,22 +129,22 @@ export const OrderInfoForm = ( ) => {
           placeholder='Ej: 3815794360'
           className={`${ classes.input } ${ classes.telefono }`}
           name='phone'
-          // error={phoneValid}
-          // value={phone}
-          // onChange={onInputChange}
+          error={phoneValid}
+          value={phone}
+          onChange={onInputChange}
           required
         />
 
         
-        {/* {( zones.length > 0 ) ? 
+        {( zones.length > 0 ) ? 
           <DeliveryRadioButtons
             deliveryType={deliveryType}
             setDeliveryType={setDeliveryType}
           /> 
           : null
-        } */}
+        }
 
-        {/* { ( deliveryType === DeliveryType.DELIVERY ) ? (
+        { ( deliveryType === DeliveryType.DELIVERY ) ? (
           <>
             <TextInput
               label='Dirección'
@@ -144,9 +152,9 @@ export const OrderInfoForm = ( ) => {
               className={`${ classes.input } ${ classes.address }`}
               autoComplete='street-address'
               name='address'
-              // error={addressValid}
-              // value={address}
-              // onChange={onInputChangeDelivery}
+              error={addressValid}
+              value={address}
+              onChange={onInputChangeDelivery}
               required
             />
             <TextInput
@@ -154,9 +162,9 @@ export const OrderInfoForm = ( ) => {
               placeholder='Ej: 123'
               className={`${ classes.input } ${ classes.addressNumber }`}
               name='addressNumber'
-              // error={addressNumberValid}
-              // value={addressNumber}
-              // onChange={onInputChangeDelivery}
+              error={addressNumberValid}
+              value={addressNumber}
+              onChange={onInputChangeDelivery}
               required
             />
             <ZonesRadioButtons
@@ -166,9 +174,9 @@ export const OrderInfoForm = ( ) => {
           </>
         ) 
           : null
-        } */}
+        }
         
-        {/* <PaymentTypeRadioButtons 
+        <PaymentTypeRadioButtons 
           paymentType={paymentType}
           setPaymentType={setPaymentType} 
         />
@@ -179,16 +187,16 @@ export const OrderInfoForm = ( ) => {
             <p className={classes.alias}>Alias: <span className={classes.transfer_info}>{transfer.alias}</span></p>
             <p className={classes.cbu}>CBU: <span className={classes.transfer_info}>{transfer.cbu}</span></p>
           </div>
-        ) : null} */}
+        ) : null}
 
         <TextInput
           label='Comentarios'
           placeholder='Ej: comentario adicional para el pedido...'
           className={`${ classes.input } ${ classes.comments }`}
-          // error={commentsValid}
-          // value={comments}
-          // onChange={onInputChange}
+          error={commentsValid}
           name='comments'
+          value={comments}
+          onChange={onInputChange}
         />
       </form>
 

@@ -5,18 +5,20 @@ import { persistReducer, persistStore } from 'redux-persist'
 import { orderSlice } from './state/order'
 
 import { localInfoSlice } from './state'
+import { orderInfoSlice } from './state/orderInfo'
 
 const persistConfig = {
   key: 'root', // Clave de persistencia
   storage, // Almacenamiento local del navegador
   // Puedes configurar aquí qué partes del estado deseas persistir
   // Por ejemplo, 'auth' para persistir solo el estado de usuario
-  whitelist: ['order', 'localinfo']
+  whitelist: ['order', 'localinfo', 'orderinfo']
 }
 
 const rootReducer = combineReducers( {
   order: orderSlice.reducer,
-  localInfo: localInfoSlice.reducer 
+  localInfo: localInfoSlice.reducer,
+  orderInfo: orderInfoSlice.reducer,
   // vocabulary: listSlice.reducer
 } )
 

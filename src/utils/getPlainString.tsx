@@ -1,1 +1,0 @@
-export const getPlainString = ( str: string ) => str.replace( /\s/g, '' ).toLowerCase()
